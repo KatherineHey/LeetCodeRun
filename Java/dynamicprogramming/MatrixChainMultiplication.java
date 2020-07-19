@@ -6,6 +6,7 @@ package dynamicprogramming;
  * @author Katherine
  *
  */
+
 public class MatrixChainMultiplication {
     //  Matrix Ai has dimension p[i-1] x p[i] for i = 1..n 
     static int MatrixChainOrder(int p[], int n) {
