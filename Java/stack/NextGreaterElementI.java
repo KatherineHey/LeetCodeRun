@@ -7,7 +7,7 @@ import java.util.Stack;
  * 496. Next Greater Element I
     Easy
     
-    You are given two arrays (without duplicates) nums1 and nums2 where nums1�s elements are subset of nums2.
+    You are given two arrays (without duplicates) nums1 and nums2 where nums1’s elements are subset of nums2.
     Find all the next greater numbers for nums1's elements in the corresponding places of nums2.
     The Next Greater Number of a number x in nums1 is the first greater number to its right in nums2.
     If it does not exist, output -1 for this number. 
@@ -17,6 +17,7 @@ import java.util.Stack;
     
     Worth reading
     https://labuladong.gitbook.io/algo/shu-ju-jie-gou-xi-lie/dan-tiao-zhan
+    「单调栈」monotonic stack
  * @author K
  *
  */
