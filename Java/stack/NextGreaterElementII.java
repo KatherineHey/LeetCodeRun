@@ -4,6 +4,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Stack;
 
+/**
+ * 503. Next Greater Element II
+ * @author Katherine
+ *
+ */
 public class NextGreaterElementII {
     public int[] nextGreaterElements1(int[] nums) {
         Stack<int[]> dec = new Stack<>();//value, index

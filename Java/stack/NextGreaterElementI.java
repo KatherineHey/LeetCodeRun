@@ -49,6 +49,31 @@ public class NextGreaterElementI {
         return nums1;
     }
     
+    /**
+     * monotonic stack
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int[] nextGreaterElementII(int[] nums1, int[] nums2) {
+        Stack<Integer> dec = new Stack<>();
+        HashMap<Integer, Integer> mapRightGreat = new HashMap<>();
+        
+        for (int i = nums2.length - 1; i >= 0; i--) {
+            while (!dec.isEmpty() && dec.peek() <= nums2[i])
+                dec.pop();
+            
+            mapRightGreat.put(nums2[i], dec.isEmpty()?-1:dec.peek());
+            dec.push(nums2[i]);
+        }
+        
+        for (int i = 0 ; i < nums1.length; i++) {
+            nums1[i] = mapRightGreat.getOrDefault(nums1[i], -1);
+        }
+        
+        return nums1;
+    }
+    
     public static void main(String[] args) {
         NextGreaterElementI ng = new NextGreaterElementI();
         
