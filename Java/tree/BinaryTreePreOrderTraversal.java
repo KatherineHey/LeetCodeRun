@@ -60,7 +60,7 @@ public class BinaryTreePreOrderTraversal {
                 }
                 
                 if (leftSubTreeRightMostNode.right == null) {
-                    results.add(root.val);
+                    results.add(root.val);// the only difference with inorder-traversal
                     leftSubTreeRightMostNode.right = root; //set right node to the current root
                     root = root.left;
                 } else {
