@@ -5,6 +5,22 @@ import java.util.List;
 import java.util.Stack;
 
 public class BinaryTreePreOrderTraversal {
+    class Node {
+        public int val;
+        public List<Node> children;
+
+        public Node() {}
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, List<Node> _children) {
+            val = _val;
+            children = _children;
+        }
+    };
+    
     List<Integer> result = new ArrayList<>();
 
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -71,5 +87,22 @@ public class BinaryTreePreOrderTraversal {
         }
         
         return results;
+    }
+    
+    List<Integer> res = new ArrayList<Integer>();
+    
+    public List<Integer> preorder(Node root) {
+        preorderNAry(root);
+        return res;
+    }
+    
+    public void preorderNAry(Node root) {
+        if (root == null) return;
+
+        res.add(root.val);
+        List<Node> children = root.children;
+        for (Node n: children) {
+            preorder(n);
+        }
     }
 }
