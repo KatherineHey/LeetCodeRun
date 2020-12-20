@@ -27,7 +27,7 @@ public class IO {
         }
     }
     
-    public static void printArrayList(List<Integer> arr) 
+    public static <T> void printArrayList(List<T> arr) 
     { 
         for (int i=0; i<arr.size(); ++i) 
             System.out.print(arr.get(i)+" "); 

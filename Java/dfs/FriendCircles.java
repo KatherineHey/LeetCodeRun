@@ -1,8 +1,37 @@
 package dfs;
 
+import java.util.Stack;
+
 public class FriendCircles {
     boolean[] visited;
     int Circles;
+    
+    public int findCircleNumIterative(int[][] M) {
+        Stack<Integer> dfs = new Stack<Integer>();
+        int N = M.length;
+        boolean[] visited = new boolean[N];
+        int circle = 0;
+
+        for (int i = 0 ; i < N; i++) {
+            if (!visited[i]) {
+                circle++;
+                
+                dfs.push(i);
+                
+                while (!dfs.isEmpty()) {
+                    int cur = dfs.pop();
+                    visited[cur] = true;
+                    for (int j = 0 ; j < N; j++) {
+                        if (M[cur][j] == 1 && !visited[j]) {
+                            dfs.push(j);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return circle;
+    }
     
     public int findCircleNum(int[][] M) {
         int N = M.length;
@@ -36,7 +65,8 @@ public class FriendCircles {
         {0,0,1}};
         
         FriendCircles fc = new FriendCircles();
-        System.out.println(fc.findCircleNum(friends));
+        //System.out.println(fc.findCircleNum(friends));
+        System.out.println(fc.findCircleNumIterative(friends));
     }
     
 }

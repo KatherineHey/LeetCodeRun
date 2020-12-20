@@ -16,7 +16,6 @@ public class WordBreak {
         
         for (String word : wordDict) {
             words.add(word);
-            int len = word.length();
         }
         
         boolean[] exists = new boolean[s.length() + 1];
@@ -32,6 +31,8 @@ public class WordBreak {
         
         return exists[s.length()];
     }
+    
+    
     
     public static void main(String[] args) {
         String s = "catsandog";
