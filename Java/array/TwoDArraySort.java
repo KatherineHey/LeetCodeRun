@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import utility.IO;
 
 public class TwoDArraySort {
-    public void merge(int[][] intervals) {
+    public void merge(Integer[][] intervals) {
         Arrays.sort(intervals, (o1, o2) -> o1[0]==o2[0]? o1[1]-o2[1]: o1[0]- o2[0]);
     }
     
@@ -16,7 +16,7 @@ public class TwoDArraySort {
     }
     
     public static void main(String[] args) {
-        int[][] interval = {{1,4}, {0,4}, {0,3}, {0,5}};
+        Integer[][] interval = {{1,4}, {0,4}, {0,3}, {0,5}};
         TwoDArraySort tw = new TwoDArraySort();
         tw.merge(interval);
         
