@@ -3,12 +3,7 @@ package UnionFind;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * https://algs4.cs.princeton.edu/15uf/UF.java.html
- * use Minimize Hamming Distance After Swap Operations as an example
- *
- */
-public class UF {
+public class MinHum {
     public int minimumHammingDistance(int[] source, int[] target, int[][] allowedSwaps) {
         int n = source.length;
         int[] parent = new int[n];
