@@ -1,3 +1,8 @@
+2115. Find All Possible Recipes from Given Supplies [DAG kahn]
+https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies
+
+Awesome answer
+
 Assumption: ingredients do not contain any recipe.
 1.	For each recipe, count its dependent ingredients as in degree; Store (ingredient, recipes that dependent on it) as HashMap;
 2.	Use the supplies as the starting points of topological sort;
