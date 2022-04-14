@@ -12,6 +12,12 @@ public String alienOrder(String[] words) {
     for(int i=0; i<words.length-1; i++){
         String cur=words[i];
         String next=words[i+1];
+        
+        // In a valid alphabet, prefixes are always first
+        if (cur.length() > next.length() && cur.startsWith(next)) {
+            return "";
+        }
+            
         int length=Math.min(cur.length(), next.length());
         for(int j=0; j<length; j++){
             char c1=cur.charAt(j);
