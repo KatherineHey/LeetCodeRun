@@ -25,13 +25,13 @@ If sub-problems do not overlap -> divide and conquer
 The optimal solution of a subproblem will not change when it was used to solve a bigger problem optimally
 
 # Algorithms that use DP
-## Fibonacci sequence 
-## Longest common subsequence
-## Knapsack
-## Floyd-Warshall
-## Bellman-Ford
+- Fibonacci sequence 
+- Longest common subsequence
+- Knapsack
+- Floyd-Warshall
+- Bellman-Ford
 
-Tip: 
+## Tip: 
 Paddings required to handle out of board cases. Actual indies start from 1 instead of 0.
 
 说人话就是，如果总长度为m，则初始化dp[m+1] 以避免特殊边界处理
@@ -54,7 +54,7 @@ return dp[n][m]
 routes[i] = min(routes[i-1],routes[i-2],routes[i-3],...routes[i-k])+cost[i]
 
 e.g. Leetcode 322. Coin Change
-```
+```java
     public int coinChange(int[] coins, int amount) {
         if (amount == 0) return 0;
         int[] dp = new int[amount+1];
@@ -78,7 +78,7 @@ e.g. Leetcode 322. Coin Change
 routes[i] = routes[i-1]+routes[i-2]+routes[i-3]+...routes[i-k]
 
 e.g. Leetcode 70 Climb stairs
-```
+```java
    public int climbStairs(int n) {
         int[] dp = new int[2];
         dp[0] = 1;
@@ -98,7 +98,7 @@ e.g. Leetcode 70 Climb stairs
 dp[i][j] = dp[i][k] + result[k]+dp{k+1][j]
 
 e.g 96. Unique Binary Search Trees
-```
+```java
     public int numTrees(int n) {
         int[] count = new int[n+1];
         count[0] =1;  
@@ -115,7 +115,7 @@ e.g 96. Unique Binary Search Trees
 ## 4. DP on Strings
 
 e.g. 1143. Longest Common Subsequence
-```
+```java
     public int longestCommonSubsequence(String text1, String text2) {
         int m = text1.length();
         int n = text2.length();
@@ -142,7 +142,7 @@ If you decide to choose the current value use the previous result where the valu
 
 e.g. 198. House Robber
 
-```
+```java
     public int rob(int[] nums) {
         if (nums.length == 1) return nums[0];
         if (nums.length == 2) return Math.max(nums[0], nums[1]);
