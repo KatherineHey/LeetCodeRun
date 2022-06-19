@@ -49,6 +49,8 @@ f(mid) 是可选的，如果找到解，直接返回解。没有f(mid)也可以�
 
 代码： sqrt(x)的**取值范围在 \[0, x] 之间，所以l=0, r = x + 1, 搜索范围 \[0, x + 1)**。
 
+套用模版：g(m) = _m_ * _m_ > x。 循环结束后l为最小的数满足 _l_ * _l_ > x，_l_:第一个平方大于x的整数。所以sqrt(x) = _l_ - 1，最后返回 _l_ - 1。
+
 ```python
 def sqrt(x):
   l = 0
@@ -64,7 +66,7 @@ def sqrt(x):
   return l - 1
 ```
 
-套用模版：f(m) 没有，g(m) = m _m > x。 循环结束后l为最小的数满足 l_ l > x，第一个平方大于x的整数。所以sqrt(x) = l - 1，最后返回 l - 1。
+
 
 ```java
 // first find the peek of the mountain
@@ -155,7 +157,7 @@ private long test(int n, int index, int a) {
 The code will get stuck in a loop. It will always select the first element as mid, but then will not move the lower bound because it wants to keep the no in its search space. The solution is to change mid = lo + (hi-lo)/2 to mid = lo + (hi-lo+1)/2, i.e. so that it rounds up instead of down. There are other ways of getting around the problem, but this one is possibly the cleanest. Just remember to always test your code on a two-element set where the predicate is false for the first element and true for the second.
 
 
-#### LIS
+#### LIS/ Patience-LIS
 Each time we only do one of the two:
 
 ```
