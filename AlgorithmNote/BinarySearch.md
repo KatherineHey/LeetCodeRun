@@ -138,22 +138,20 @@ private long test(int n, int index, int a) {
 ### 非常赞的总结！！
 
 
-{% embed url="https://leetcode.com/discuss/general-discussion/786126/python-powerful-ultimate-binary-search-template-solved-many-problems" %}
-
-
-
+https://leetcode.com/discuss/general-discussion/786126/python-powerful-ultimate-binary-search-template-solved-many-problems
 
 
 [https://www.topcoder.com/thrive/articles/Binary%20Search](https://www.topcoder.com/thrive/articles/Binary%20Search)
 
-&#x20;You can verify that this satisfies our condition that the element we’re looking for always be present in the interval (lo, hi). However, there is another problem. Consider what happens when you run this code on some search space for which the predicate gives:\
-\
+
+You can verify that this satisfies our condition that the element we’re looking for always be present in the interval (lo, hi). However, there is another problem. Consider what happens when you run this code on some search space for which the predicate gives:\
+
 
 
 | no | yes |
 | -- | --- |
 
-\
+
 The code will get stuck in a loop. It will always select the first element as mid, but then will not move the lower bound because it wants to keep the no in its search space. The solution is to change mid = lo + (hi-lo)/2 to mid = lo + (hi-lo+1)/2, i.e. so that it rounds up instead of down. There are other ways of getting around the problem, but this one is possibly the cleanest. Just remember to always test your code on a two-element set where the predicate is false for the first element and true for the second.
 
 
