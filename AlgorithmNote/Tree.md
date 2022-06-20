@@ -1,3 +1,43 @@
+
+#    In-order(BOTH recursive and iterative) :star:
+
+### Tips: tackle various tree questions using inorder traversal, since BST has the property left subtree all nodes' values < middle < right subtree all nodes' values, essentially inorder traversal for BST creates an increasing list.
+
+```java
+   public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList();
+        dfs(root, list);
+        return list;
+    }
+    
+    private void dfs(TreeNode root, List<Integer> list) {
+        if(root == null)
+            return;
+        dfs(root.left, list);
+        list.add(root.val);
+        dfs(root.right, list);
+    } 
+    
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> results = new ArrayList<Integer>();
+        
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        while (root != null || !s.isEmpty()) {
+            while (root != null) {
+                s.push(root);
+                root = root.left;
+            }
+            
+            root = s.pop();
+            results.add(root.val);
+            root = root.right;
+        }
+        
+        return results;
+    }
+
+```
+
 #    Pre-order(BOTH recursive and iterative)
 ```java
 
@@ -90,43 +130,6 @@
             }
         }
         return result;
-    }
-
-```
-
-#    In-order(BOTH recursive and iterative)
-
-```java
-   public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList();
-        dfs(root, list);
-        return list;
-    }
-    
-    private void dfs(TreeNode root, List<Integer> list) {
-        if(root == null)
-            return;
-        dfs(root.left, list);
-        list.add(root.val);
-        dfs(root.right, list);
-    } 
-    
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> results = new ArrayList<Integer>();
-        
-        Stack<TreeNode> s = new Stack<TreeNode>();
-        while (root != null || !s.isEmpty()) {
-            while (root != null) {
-                s.push(root);
-                root = root.left;
-            }
-            
-            root = s.pop();
-            results.add(root.val);
-            root = root.right;
-        }
-        
-        return results;
     }
 
 ```
