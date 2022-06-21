@@ -134,37 +134,127 @@
 
 ```
 
-
-# BFS / Level Order Traversal
-
+# N-ary Tree Preorder Traversal
 
 ```java
 class Solution {
-    public List<Integer> levelOrder(TreeNode root) {
-        List<Integer> result = new ArrayList();
-        if(root == null)
-            return result;
-        
-        Queue<TreeNode> q = new LinkedList();
-        q.add(root);
-        while(q.size() > 0) {
-            root = q.poll();
-            result.add(root.val);
-            if(root.left != null)
-                q.add(root.left);
-            if(root.right != null)
-                q.add(root.right);
+    List<Integer> res = new ArrayList<Integer>();
+    
+    public List<Integer> preorder(Node root) {
+        preorderNAry(root);
+        return res;
+    }
+    
+    public void preorderNAry(Node root) {
+        if (root == null) return;
+
+        res.add(root.val);
+        List<Node> children = root.children;
+        for (Node n: children) {
+            preorder(n);
         }
-        
-        return result;
     }
 }
 ```
 
+# N-ary Tree Postorder Traversal
+
+```java
+
+    public List<Integer> postorder(Node root) {
+        List<Integer> results = new ArrayList<Integer>();
+        Stack<Node> s = new Stack<Node>();
+        
+        if (root == null) return results;
+        
+        s.push(root);
+        
+        while (!s.isEmpty()) {
+            root = s.pop();
+            results.add(root.val);
+            
+            for (Node n : root.children) {
+                s.add(n);
+            }
+        }
+        
+        Collections.reverse(results);
+        
+        return results;
+    }
+```
+
+# BFS / Level Order Traversal
+
+N-ary Tree Level Order Traversal
+
+
+```java
+   public List<List<Integer>> levelOrder(Node root) {
+        Queue<Node> q = new LinkedList<Node>();
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if (root == null) return res;
+        
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            List<Integer> curLevel = new LinkedList<>();
+            int len = q.size();
+
+            for (int i = 0 ; i < len; i++) {
+                Node node = q.poll();
+                curLevel.add(node.val);
+                for (Node n: node.children) {
+                    q.add(n);
+                }
+            }
+
+            res.add(curLevel);
+        }
+
+        return res;
+    }
+```
+
 #    Maximum Depth of N-ary Tree
+
+```java
+    public int maxDepth(Node root) {
+        return dfs(root);
+    }
+    
+    public int dfs(Node root) {
+        if (root == null) return 0;
+        
+        int maxChildHeight = 0;
+        for (Node n : root.children) {
+            int h = dfs(n);
+            maxChildHeight = Math.max(maxChildHeight, h);
+        }
+        
+        return maxChildHeight + 1;
+    }
+```
+
 #    Serialization and deserialization of trees - Leetcode
+
+
 #    Binary Search Tree
+
+Also called an ordered or sorted binary tree, is a rooted binary tree data structure with the key of each internal node being greater than all the keys in the respective node's left subtree and less than the ones in its right subtree
+
+
 #    Lowest Common Ancestor - Leetcode
+
+```java
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+        TreeNode l = lowestCommonAncestor(root.left, p, q);
+        TreeNode r = lowestCommonAncestor(root.right, p, q);
+        if (l != null && r != null) return root;
+        return l==null?r:l; 
+    }
+```
 
 #  超纲
 ### Morris In-order traversal by Tushar Roy (Video)
