@@ -238,6 +238,56 @@ N-ary Tree Level Order Traversal
 
 #    Serialization and deserialization of trees - Leetcode
 
+```java
+public class Codec {
+    // Encodes a tree to a single string.
+    // # to represent null node
+    // , to separate every node
+    private static final String NN = "#";
+    private static final String separator = ",";
+
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        serializeHelperPreorder(root, sb);
+        
+        return sb.toString();
+    }
+    
+    public void serializeHelperPreorder(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append(NN).append(separator);
+            return;
+        }    
+        
+        sb.append(node.val).append(separator);
+        
+        serializeHelperPreorder(node.left, sb);
+        serializeHelperPreorder(node.right, sb);
+        
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        Deque<String> nodes = new LinkedList<>();
+        nodes.addAll(Arrays.asList(data.split(separator)));
+    
+        return deserializeHelper(nodes);
+    }
+    
+    public TreeNode deserializeHelper(Deque<String> nodes) {
+        String val = nodes.remove();
+        if (val.equals(NN)) {
+            return null;
+        } else {
+            TreeNode node = new TreeNode(Integer.valueOf(val));
+            node.left = deserializeHelper(nodes);
+            node.right = deserializeHelper(nodes);
+            return node;
+        }
+    }
+}
+
+```
 
 #    Binary Search Tree
 
