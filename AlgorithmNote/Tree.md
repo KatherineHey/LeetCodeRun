@@ -254,7 +254,7 @@ N-ary Tree Level Order Traversal
 
 ```java
 public class Codec {
-    // Encodes a tree to a single string.
+    // Serialization and deserialization of trees: Encodes a tree to a single string.
     // # to represent null node
     // , to separate every node
     private static final String NN = "#";
