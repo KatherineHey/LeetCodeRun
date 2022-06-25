@@ -236,6 +236,20 @@ N-ary Tree Level Order Traversal
     }
 ```
 
+
+#    Lowest Common Ancestor - Leetcode
+
+```java
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+        TreeNode l = lowestCommonAncestor(root.left, p, q);
+        TreeNode r = lowestCommonAncestor(root.right, p, q);
+        if (l != null && r != null) return root;
+        return l==null?r:l; 
+    }
+```
+
+
 #    Serialization and deserialization of trees - Leetcode
 
 ```java
@@ -293,18 +307,6 @@ public class Codec {
 
 Also called an ordered or sorted binary tree, is a rooted binary tree data structure with the key of each internal node being greater than all the keys in the respective node's left subtree and less than the ones in its right subtree
 
-
-#    Lowest Common Ancestor - Leetcode
-
-```java
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || root == p || root == q) return root;
-        TreeNode l = lowestCommonAncestor(root.left, p, q);
-        TreeNode r = lowestCommonAncestor(root.right, p, q);
-        if (l != null && r != null) return root;
-        return l==null?r:l; 
-    }
-```
 
 #  超纲
 ### Morris In-order traversal by Tushar Roy (Video)
