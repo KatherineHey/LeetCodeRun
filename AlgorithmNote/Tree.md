@@ -303,6 +303,132 @@ public class Codec {
 
 ```
 
+# Boundary Traversal Anticlockwise
+
+```java
+class Solution {
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> result = new ArrayList();
+        if(root == null)
+            return result;
+            
+        result.add(root.val);
+        leftSide(root.left, result);
+        leafNode(root.left, result);
+        leafNode(root.right, result);
+        rightSide(root.right, result);
+        
+        return result;
+    }
+    
+    private void leftSide(TreeNode node, List<Integer> result) {
+        if(node == null)
+            return;
+        if(node.left != null) {
+            result.add(node.val);
+            leftSide(node.left, result);
+        } else if(node.right != null) {
+            result.add(node.val);
+            leftSide(node.right, result);
+        }
+    }
+    
+    private void leafNode(TreeNode node, List<Integer> result) {
+        if(node == null)
+            return;
+        leafNode(node.left, result);
+        if(node.left == null && node.right == null)
+            result.add(node.val);
+        leafNode(node.right, result);
+    }
+    
+    
+    private void rightSide(TreeNode node, List<Integer> result) {
+        if(node == null)
+            return;
+        if(node.right != null) {
+            rightSide(node.right, result);
+            result.add(node.val);
+        } else if(node.left != null) {
+            rightSide(node.left, result);
+            result.add(node.val);
+        }
+    }
+}
+```
+
+# Binary Tree Maximum Path Sum
+``` java
+class Solution {
+    int maxPath = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        pathHelper(root);
+        return maxPath;
+    }
+    
+    // return max value of path going through root
+    public int pathHelper(TreeNode root) {
+        if (root == null) return 0;
+        
+        // max value from left tree 
+        // now find the max of all the four paths
+        int left = pathHelper(root.left);
+        int right = pathHelper(root.right);
+        int leftPath = root.val + left;
+        int rightPath = root.val + right;
+        int completePath = root.val + right + left;
+
+        maxPath = Math.max(maxPath, Math.max(root.val, Math.max(leftPath, Math.max(rightPath, completePath))));
+        return Math.max(leftPath, Math.max(rightPath, root.val));
+    }
+}
+```
+
+# Word Search
+```java
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        
+        boolean[][] used = new boolean[m][n];
+        
+        for (int x = 0; x < m; x++) {
+            for (int y = 0; y < n; y++) {
+                if (board[x][y] == word.charAt(0)) {
+                    if (dfs(board, used, word, 0, x, y))
+                        return true;
+                }
+            }
+        }        
+        
+        return false;
+    }
+    
+    public boolean dfs(char[][] board, boolean[][] used, String word, int i, int x, int y) {
+        if (i == word.length())
+            return true;
+        
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] != word.charAt(i) || used[x][y])
+            return false;
+        
+        used[x][y] = true;
+        
+        int[][] dirs = {{0,1}, {0,-1}, {1, 0}, {-1, 0}};
+        
+        if (dfs(board, used, word, i+1, x+dirs[0][0], y+dirs[0][1]) ||
+           dfs(board, used, word, i+1, x+dirs[1][0], y+dirs[1][1]) ||
+           dfs(board, used, word, i+1, x+dirs[2][0], y+dirs[2][1]) ||
+           dfs(board, used, word, i+1, x+dirs[3][0], y+dirs[3][1])) {
+            return true;
+        }
+        
+        used[x][y] = false;
+        return false;
+    }
+}
+```
+
 #    Binary Search Tree
 
 Also called an ordered or sorted binary tree, is a rooted binary tree data structure with the key of each internal node being greater than all the keys in the respective node's left subtree and less than the ones in its right subtree
