@@ -123,5 +123,8 @@ class Solution {
 # Dijikstra
 # Dijkstra on sparse graphs - Competitive Programming Algorithms
 # Number of Islands
+
+Each time going into a land, dfs to mark all attaching land to water, keep a counter out of dfs.
+
 # Friend Circles
 # Decode String
