@@ -34,11 +34,16 @@ Explanation: The order is invalid, so return "".
 
 ```java
 class Solution {
+    // Easy to fail examples
+    // ["ab","adc"], expect: "abcd"
+    // ["z","x","a","zb","zx"], expect: ""
     public String alienOrder(String[] words) {
         // Compare every two words' lexicographical order to populate graph
         // From, Destinations
         HashMap<Character, HashSet<Character>> g = new HashMap<Character, HashSet<Character>>();
         int[] pre = new int[26];
+        
+        // Count of characters that ever existed
         int cnt = 0;
         
         for (int i = 0; i < 26; i++) {
@@ -59,6 +64,7 @@ class Solution {
             String w1 = words[i];
             String w2 = words[i+1];
             
+            // below would break ["z","z"]
             // Special case: w2 contains w1 and longer, continue
             //if (w2.startsWith(w1)) continue;
             
