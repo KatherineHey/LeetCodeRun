@@ -1,6 +1,24 @@
 
 # Representing graphs
 
+### Edge lists
+O(E) to search through edges if no specific order
+
+### Adjacency matrices
+O(V^2) space even for sparse graph
+
+which vertices are adjacent to a given vertex i, check all ∣V∣ entries in row i, even if only a small number of vertices are adjacent to vertex i.
+
+undirected graph - symmetric
+
+### Adjacency lists
+
+Edge (i,j) is in the graph? we go to i's adjacency list in constant time and then look for j in i's adjacency list. 
+How long does that take in the worst case? The answer is Θ(d) where d is the degree of vertex i, because that's how long i's adjacency list is.
+
+In an undirected graph, vertex j is in vertex i's adjacency list if and only if i is in j's adjacency list. If the graph is weighted, then each item in each adjacency list is either a two-item array or an object, giving the vertex number and the edge weight.
+
+
 # DFS, BFS Explanation by csgator(BEST)
 
 # Topological Sorting
