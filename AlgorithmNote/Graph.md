@@ -134,3 +134,38 @@ Each time going into a land, dfs to mark all attaching land to water, keep a cou
 
 # Friend Circles
 # Decode String
+
+# Clone Graph
+```java
+    public Node cloneGraph(Node node) {
+        if (node == null)
+            return null;
+        
+        // Old to new mapping
+        HashMap<Node, Node> map = new HashMap<Node, Node>();
+        
+        // Clone graph using bfs traversing old graph
+        Deque<Node> q = new LinkedList<>();
+        
+        // Create clone only when saving into map
+        // Always access clone through the map
+        map.put(node, new Node(node.val));
+        q.offer(node);
+        while (!q.isEmpty()) {
+            Node cur = q.poll();
+            
+            // Going through neighbors to rebuild edges of cur
+            for (Node nei: cur.neighbors) {
+                // Clone the neighbor if not exist
+                if (!map.containsKey(nei)) {
+                    map.put(nei, new Node(nei.val));
+                    q.offer(nei);
+                }
+                
+                map.get(cur).neighbors.add(map.get(nei));
+            }
+        }
+        
+        return map.get(node);
+    }
+```
