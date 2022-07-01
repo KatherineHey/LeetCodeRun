@@ -20,9 +20,62 @@ In an undirected graph, vertex j is in vertex i's adjacency list if and only if 
 
 
 # DFS, BFS Explanation by csgator(BEST)
+https://medium.com/leetcode-patterns/leetcode-pattern-1-bfs-dfs-25-of-the-problems-part-1-519450a84353
 
-# Topological Sorting
-269. Alien Dictionary
+### A tree can be thought of as a connected acyclic graph with N nodes and N-1 edges. 
+
+Any two vertices are connected by _exactly_ one path. So naturally the question arises, what about a DFS or a BFS on binary trees ? well there are 6 possible DFS traversals for binary trees ( 3 rose to fame while the other 3 are just symmetric )
+
+    1. left, right, root ( Postorder) ~ 4. right, left, root
+    2. left, root, right ( Inorder) ~ 5. right, root, left
+    3. root, left, right ( Preorder) ~ 6. root, right, left
+    
+### DFS magic spell
+1]push to stack, 2] pop top , 3] retrieve unvisited neighbours of top, push them to stack 4] repeat 1,2,3 while stack not empty. Now form a rap !
+
+144. Preorder Traversal
+
+Let’s walk through the above spell using an example tree.
+![image](https://user-images.githubusercontent.com/62370578/176948288-4cfc6d6e-91dd-4d77-be1b-74ba043de5f7.png)
+
+```java
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+
+        Stack<TreeNode> s = new Stack<>();
+        s.push(root);
+
+        while (!s.isEmpty()) {
+            TreeNode cur = s.pop();
+            if (cur != null) {
+                s.push(cur.right);
+                s.push(cur.left);
+
+                res.add(cur.val);
+            }
+        }
+
+        return res;
+    }
+
+```
+
+### Stack for DFS, queue for BFS | extend DFS to graphs by including visited mechanism
+
+1] Why are we using stack for DFS , couldn’t we use a queue ? ( always remember : stack for DFS, imagine a vertical flow | queue for BFS, horizontal flow, more on this later)
+
+2] How do we extend this DFS process to general graphs or graphs disguised as matrices ( as in most LC problems). ( Include a mechanism to track visited)
+
+#### Why
+
+![image](https://user-images.githubusercontent.com/62370578/176949216-033172fc-e5ac-4ff5-8705-31fe9805d2a7.png)
+
+
+### Algorithms and Patterns
+
+
+#### 1. Topological Sorting
+269.Alien Dictionary
 
 There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you.
 
@@ -143,17 +196,26 @@ class Solution {
 }
 ```
 
-# Prims and Kruskal
-# Dijikstra
-# Dijkstra on sparse graphs - Competitive Programming Algorithms
-# Number of Islands
+#### 2. Connected components/ Grid
+DFS 
 
-Each time going into a land, dfs to mark all attaching land to water, keep a counter out of dfs.
+323.Number of Connected Components in an Undirected Graph
+
+200.Number of Islands: Each time going into a land, dfs and mark all attaching land to water, keep a counter out of dfs.
+
+547.Friend Circles
+
+
+#### 3. Prims and Kruskal
+#### 4. Dijikstra
+
+
+# Dijkstra on sparse graphs - Competitive Programming Algorithms
 
 # Friend Circles
 # Decode String
 
-# Clone Graph
+#### Clone Graph
 ```java
     public Node cloneGraph(Node node) {
         if (node == null)
