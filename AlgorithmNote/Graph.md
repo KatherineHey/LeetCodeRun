@@ -71,6 +71,11 @@ Let’s walk through the above spell using an example tree.
 ![image](https://user-images.githubusercontent.com/62370578/176949216-033172fc-e5ac-4ff5-8705-31fe9805d2a7.png)
 
 
+#### Concluding thoughts on BFS :
+- Problems in which you have to find shortest path are most likely calling for a BFS.
+- For graphs having unit edge distances, shortest paths from any point is just a BFS starting at that point, no need for Dijkstra’s algorithm.
+- Maze solving problems are mostly shortest path problems and every maze is just a fancy graph so you get the flow.
+
 ### Algorithms and Patterns
 
 
