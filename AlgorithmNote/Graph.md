@@ -79,9 +79,31 @@ Let’s walk through the above spell using an example tree.
 ### Algorithms and Patterns
 
 
-#### 1. Topological Sorting
+#### 1. Topological Sorting/ Kahn's Algorithm
+
+207.Course Schedule
+```java
+    public boolean canFinish(int n, int[][] prerequisites) {
+        ArrayList<Integer>[] G = new ArrayList[n];
+        int[] degree = new int[n];
+        ArrayList<Integer> bfs = new ArrayList();
+        for (int i = 0; i < n; ++i) G[i] = new ArrayList<Integer>();
+        for (int[] e : prerequisites) {
+            G[e[1]].add(e[0]);
+            degree[e[0]]++;
+        }
+        for (int i = 0; i < n; ++i) if (degree[i] == 0) bfs.add(i);
+        for (int i = 0; i < bfs.size(); ++i)
+            for (int j: G[bfs.get(i)])
+                if (--degree[j] == 0) bfs.add(j);
+        return bfs.size() == n;
+    }
+```
+
+
 269.Alien Dictionary
 
+```
 There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you.
 
 You are given a list of strings words from the alien language's dictionary, where the strings in words are sorted lexicographically by the rules of this new language.
@@ -89,8 +111,6 @@ You are given a list of strings words from the alien language's dictionary, wher
 Return a string of the unique letters in the new alien language sorted in lexicographically increasing order by the new language's rules. If there is no solution, return "". If there are multiple solutions, return any of them.
 
 A string s is lexicographically smaller than a string t if at the first letter where they differ, the letter in s comes before the letter in t in the alien language. If the first min(s.length, t.length) letters are the same, then s is smaller if and only if s.length < t.length.
-
- 
 
 Example 1:
 
@@ -107,6 +127,7 @@ Example 3:
 Input: words = ["z","x","z"]
 Output: ""
 Explanation: The order is invalid, so return "".
+```
 
 ```java
 class Solution {
