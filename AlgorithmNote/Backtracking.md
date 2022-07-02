@@ -7,7 +7,7 @@ Time Complexy: O(n * m !), n is number of workers, m is number of bikes
 Ususally, when input size <= 10, O(n!) can be accepeted. When input size <= 12, we probably need do some pruning. if the test case is not strong, or problem designer wants to allow this techonolgy (dfs + pruning) to pass. we can luckly get a AC.(For my experenice in LeetCode, when problem is tagged as Medium, this kind solution can be passed)
 
 For this problem, we add a very simple but effective condition:
-
+```java
 	if (distance > min) return ;
 
 	int min = Integer.MAX_VALUE;
@@ -36,7 +36,7 @@ For this problem, we add a very simple but effective condition:
     public int dis(int[] p1, int[] p2) {
         return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
     }
-
+```
 Actually the Brute Force Solution is a Permutation Problem's solution.
 One possible optimization is transfering Permutation Problem to Combination Problem(subset problem )，from n! to 2^n. In Leetcode, I think when n < 15 , it can be accepted.
 
@@ -52,7 +52,7 @@ init:dp[0][0] = 0;
 result: dp[n][s] s should have n bit
 
 the code should be easy to understand.
-
+```java
   public int assignBikes(int[][] workers, int[][] bikes) {
         int n = workers.length;
         int m = bikes.length;
@@ -82,3 +82,4 @@ the code should be easy to understand.
     public int dis(int[] p1, int[] p2) {
         return Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
     }
+``
