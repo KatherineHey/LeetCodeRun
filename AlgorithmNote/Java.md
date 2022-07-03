@@ -14,3 +14,17 @@ for(Map.Entry<Integer, ArrayList<int[]>> entry : distances.entrySet()) {
     }
 }
 ```
+
+```java
+int[][] maxLength = new int[m][n];
+
+// Fill each row with -1
+for (int[] row: maxLength)
+    Arrays.fill(row, -1);
+
+```
+
+```java
+// asc | min heap
+PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a,b) -> Integer.compare(a[0], b[0]));
+```
