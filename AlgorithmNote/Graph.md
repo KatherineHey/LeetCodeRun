@@ -266,10 +266,10 @@ class Solution {
 - [x] 417 Pacific Atlantic Water Flow - https://leetcode.com/problems/pacific-atlantic-water-flow/
 - [x] 200.Number of Islands: Each time going into a land, dfs and mark all attaching land to water, keep a counter out of dfs.
 
-- [ ] 547.Friend Circles
-
 #### 3.2 Connected components | Union Find
 
+
+- [x] 547.Friend Circles
 - [x] 323.Number of Connected Components in an Undirected Graph
 
 ```java
