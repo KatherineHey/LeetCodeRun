@@ -81,7 +81,7 @@ Let’s walk through the above spell using an example tree.
 
 #### 1. Topological Sorting/ Kahn's Algorithm
 
-207.Course Schedule
+- [x] 207.Course Schedule
 ```java
     public boolean canFinish(int n, int[][] prerequisites) {
         ArrayList<Integer>[] G = new ArrayList[n];
@@ -101,7 +101,7 @@ Let’s walk through the above spell using an example tree.
 ```
 
 
-269.Alien Dictionary
+- [ ] 269.Alien Dictionary
 
 ```
 There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you.
@@ -222,24 +222,8 @@ class Solution {
 }
 ```
 
-#### 2. Connected components/ Grid
-DFS 
-
-323.Number of Connected Components in an Undirected Graph
-
-200.Number of Islands: Each time going into a land, dfs and mark all attaching land to water, keep a counter out of dfs.
-
-547.Friend Circles
-
-
-#### 3. Prims and Kruskal
-#### 4. Dijikstra
-
-
-# Dijkstra on sparse graphs - Competitive Programming Algorithms
-
-# Friend Circles
-# Decode String
+#### 2. HashMap + BFS Traversal
+- [x] 133 Clone Graph - https://leetcode.com/problems/clone-graph/ [checkback 7/4]
 
 #### Clone Graph
 ```java
@@ -275,3 +259,165 @@ DFS
         return map.get(node);
     }
 ```
+
+
+#### 3. Connected components/ Grid | DFS + memo
+
+- [ ] 323.Number of Connected Components in an Undirected Graph
+- [x] 417 Pacific Atlantic Water Flow - https://leetcode.com/problems/pacific-atlantic-water-flow/
+- [x] 200.Number of Islands: Each time going into a land, dfs and mark all attaching land to water, keep a counter out of dfs.
+
+- [ ] 547.Friend Circles
+
+
+#### 3. Prims and Kruskal
+#### 4. Dijkstra
+
+#### 5. Dijkstra'
+
+```java
+
+/**
+ * 1066. Campus Bikes II
+ * On a campus represented as a 2D grid, there are n workers and m bikes, with n <= m. Each worker and bike is a 2D coordinate on this grid.
+We assign one unique bike to each worker so that the sum of the Manhattan distances between each worker and their assigned bike is minimized.
+Return the minimum possible sum of Manhattan distances between each worker and their assigned bike.
+The Manhattan distance between two points p1 and p2 is Manhattan(p1, p2) = |p1.x - p2.x| + |p1.y - p2.y|.
+ */
+public class CampusBikeii {
+    // Approach 1: Backtracking
+    int M;
+    int N;
+    int SumDistances = Integer.MAX_VALUE; 
+    public int assignBikes(int[][] workers, int[][] bikes) {
+        M = workers.length;
+        N = bikes.length;
+        boolean[] bikesUsed = new boolean[N];
+        
+        dfs(workers, bikes, bikesUsed, 0, 0);
+        return SumDistances;
+    }
+    
+    // Manhattan distance
+    public int getDistance(int[] worker, int[] bike) {
+        return Math.abs(worker[0]-bike[0]) + Math.abs(worker[1] - bike[1]);
+    }
+    
+    // Greedy backtracking through all combinations
+    public void dfs(int[][] workers, int[][] bikes, boolean[] bikesUsed, int i, int distance) {
+        // Prune
+        if (distance > SumDistances)
+            return;
+        
+        if (i == workers.length) {
+            SumDistances = Math.min(SumDistances, distance);
+            return;
+        }
+        
+        for (int j = 0; j < bikes.length; j++) {
+            if (bikesUsed[j]) continue;
+            
+            bikesUsed[j] = true;
+            dfs(workers, bikes, bikesUsed, i+1, distance + getDistance(workers[i], bikes[j]));
+            bikesUsed[j] = false;
+        }
+    }
+    
+    // Approach 2: DP + mask
+    /*
+     * Complexity Analysis
+    Here N is the number of workers, and M is the number of bikes.
+    Time complexity: O(M* 2^M)
+    Time complexity is equal to the number of unique states in the memo table multiplied by the average time 
+    that the minimumDistanceSum function takes. 
+    The number of states is equal to unique values of mask that is 2^M and 
+    the minimumDistanceSum function takes O(M) time. So the time complexity is O(M* 2^M)
+
+    Space complexity: O(2^M)
+    We have used an array memo to store the results corresponding to mask. 
+    Also, there will be some stack space used during recursion. 
+    The recursion space will be equal to the maximum number of the active function calls in the stack that will be 
+    equal to the number of workers i.e., N. 
+    Hence the space complexity will be equal to O(2^M + N).
+     */
+    public int assignBikesDpMask(int[][] workers, int[][] bikes) {
+        Arrays.fill(memo, -1);
+        return minimumDistanceSum(workers, bikes, 0, 0);
+    }
+    
+    // Maximum value of mask will be 2^(Number of bikes)
+    // and number of bikes can be 10 at max
+    int memo [] = new int[1024];
+    
+    private int minimumDistanceSum(int[][] workers, int[][] bikes, int workerIndex, int mask) {
+        if (workerIndex >= workers.length) {
+            return 0;
+        }
+        
+        // If result is already calculated, return it no recursion needed
+        if (memo[mask] != -1)
+            return memo[mask];
+        
+        int smallestDistanceSum = Integer.MAX_VALUE;
+        for (int bikeIndex = 0; bikeIndex < bikes.length; bikeIndex++) {
+            // Check if the bike at bikeIndex is available
+            if ((mask & (1 << bikeIndex)) == 0) {
+                // Adding the current distance and repeat the process for next worker
+                // also changing the bit at index bikeIndex to 1 to show the bike there is assigned
+                smallestDistanceSum = Math.min(smallestDistanceSum, 
+                   getDistance(workers[workerIndex], bikes[bikeIndex]) + 
+                   minimumDistanceSum(workers, bikes, workerIndex + 1, mask | (1 << bikeIndex)));
+            }
+        }
+        
+        // Memoizing the result corresponding to mask
+        return memo[mask] = smallestDistanceSum;
+    }
+    
+    // Approach 3: similar to Dijstra
+    public int assignBikesPQ(int[][] workers, int[][] bikes) {
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a,b) -> Integer.compare(a[0], b[0]));
+        HashSet<Integer> visitedMasks = new HashSet<Integer>();
+        
+        pq.add(new int[] {0, 0});
+        
+        while (!pq.isEmpty()) {
+            int[] pairs = pq.poll();
+            int mask = pairs[1];
+            if (visitedMasks.contains(mask)) continue;
+            
+            visitedMasks.add(mask);
+            int cost = pairs[0];
+            
+            int workerIdx = getNumberOfOnes(mask);
+            
+            if (workerIdx == workers.length) return cost;
+            
+            // Check all bikes from current state
+            for (int i = 0; i < bikes.length; i++) {
+                if ((mask & (1 << i)) == 0) {
+                    pq.add(new int[] {cost+getDistance(workers[workerIdx], bikes[i]), mask | (1<<i)});
+                }
+            }
+        }
+        
+        return -1;
+    }
+    
+    public int getNumberOfOnes(int mask) {
+        int cnt = 0;
+        while (mask != 0) {
+            mask &= (mask-1);
+            cnt++;
+        }
+        
+        return cnt;
+    }
+}
+
+```
+
+# Dijkstra on sparse graphs - Competitive Programming Algorithms
+
+# Friend Circles
+# Decode String
