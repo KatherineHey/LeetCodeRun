@@ -261,12 +261,12 @@ class Solution {
 ```
 
 
-#### 3.1 Connected components/ Grid | DFS + memo 
+#### 3 DFS + memo | Connected components/ Grid
 
 - [x] 417 Pacific Atlantic Water Flow - https://leetcode.com/problems/pacific-atlantic-water-flow/
 - [x] 200.Number of Islands: Each time going into a land, dfs and mark all attaching land to water, keep a counter out of dfs.
 
-#### 3.2 Connected components | Union Find
+#### 4 Union Find | Connected components
 
 
 - [x] 547.Friend Circles
@@ -317,7 +317,7 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 
 ```
 
-#### 4. Kruskal
+#### 5. Kruskal
 
 ```java
 
@@ -404,9 +404,9 @@ public class MST_Kruskal {
 
 ```
 
-#### 5.1 Dijkstra
+#### 6.1 Dijkstra
 
-#### 5.2 Dijkstra Variant
+#### 6.2 Dijkstra Variant
 
 - [x] 1066. Campus Bikes II
 
@@ -551,4 +551,4 @@ public class CampusBikeii {
 
 ```
 
-# Dijkstra on sparse graphs - Competitive Programming Algorithms
+#### 6.3 Dijkstra on sparse graphs - Competitive Programming Algorithms
