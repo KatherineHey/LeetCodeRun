@@ -261,24 +261,72 @@ class Solution {
 ```
 
 
-#### 3. Connected components/ Grid | DFS + memo
+#### 3.1 Connected components/ Grid | DFS + memo 
 
-- [ ] 323.Number of Connected Components in an Undirected Graph
 - [x] 417 Pacific Atlantic Water Flow - https://leetcode.com/problems/pacific-atlantic-water-flow/
 - [x] 200.Number of Islands: Each time going into a land, dfs and mark all attaching land to water, keep a counter out of dfs.
 
 - [ ] 547.Friend Circles
 
+#### 3.2 Connected components | Union Find
 
-#### 3. Prims and Kruskal
-#### 4. Dijkstra
+- [x] 323.Number of Connected Components in an Undirected Graph
 
-#### 5. Dijkstra'
+```java
+public class NumberofConnectedComponentsinanUndirectedGraph {
+    // if index == value, it's a parent/ representative of the component
+    int[] Parent;
+    int Cnt = 0;
+    public int countComponents(int n, int[][] edges) {
+        Parent = new int[n+1];
+        Cnt = n;
+        
+        // Initialize every node to be it's own component
+        for (int i = 0; i < n; i++) {
+            Parent[i] = i;
+        }
+        
+        for (int[] edge : edges) {
+            if (union(edge[0], edge[1]))
+                Cnt--;
+        }
+        
+        return Cnt;
+    }
+    
+    public int find(int n) {
+        if (n == Parent[n])
+            return n;
+        
+        Parent[n] = find(Parent[n]);
+        return Parent[n];
+    }
+    
+    // return true, if initially in different components
+    // false if already the same components
+    public boolean union(int i, int j) {
+        int parentI = find(i);
+        int parentJ = find(j);
+        if (parentI == parentJ)
+            return false;
+        
+        Parent[parentI] = parentJ;
+        return true;
+    }
+}
+
+```
+
+#### 4. Prims and Kruskal
+#### 5.1 Dijkstra
+
+#### 5.2 Dijkstra Variant
+
+- [x] 1066. Campus Bikes II
 
 ```java
 
 /**
- * 1066. Campus Bikes II
  * On a campus represented as a 2D grid, there are n workers and m bikes, with n <= m. Each worker and bike is a 2D coordinate on this grid.
 We assign one unique bike to each worker so that the sum of the Manhattan distances between each worker and their assigned bike is minimized.
 Return the minimum possible sum of Manhattan distances between each worker and their assigned bike.
@@ -419,5 +467,5 @@ public class CampusBikeii {
 
 # Dijkstra on sparse graphs - Competitive Programming Algorithms
 
-# Friend Circles
+
 # Decode String
