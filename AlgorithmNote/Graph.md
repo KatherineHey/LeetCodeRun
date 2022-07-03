@@ -406,7 +406,7 @@ public class MST_Kruskal {
 
 #### 6.1 Dijkstra
 
-#### 6.2 Dijkstra Variant
+#### 6.2 Dijkstra Variant | Dijkstra on mask
 
 - [x] 1066. Campus Bikes II
 
