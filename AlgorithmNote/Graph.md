@@ -406,6 +406,81 @@ public class MST_Kruskal {
 
 #### 6.1 Dijkstra
 
+- [x] 1786. Number of Restricted Paths From First to Last Node
+```java
+class Solution {
+    public int countRestrictedPaths(int n, int[][] edges) {
+        if (n == 1) return 0;
+        List<int[]>[] graph = new List[n+1];
+        
+        // u->v: u, [v, weight]
+        for (int i = 1; i <= n; i++) graph[i] = new ArrayList<>();
+        
+        for (int[] e: edges) {
+            graph[e[0]].add(new int[] {e[1], e[2]});
+            graph[e[1]].add(new int[] {e[0], e[2]});
+        }
+        
+        int[] dist = dijstra(graph, n);
+        
+        return dfs(1, n, graph, dist, new Integer[n+1]);
+    }
+    
+    /**
+    Dijstra's algorithm to find the shortest path from n to all other nodes
+    */
+    public int[] dijstra(List<int[]>[] graph, int n) {
+        // Distances from n to all other nodes
+        // Extra 1 in length for easy access
+        int[] distances = new int[n+1];
+        Arrays.fill(distances, Integer.MAX_VALUE);
+        
+        // Min heap for distances
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        pq.offer(new int[]{n, 0});
+        distances[n] = 0;
+        
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            int u = cur[0];
+            if (cur[1] != distances[u]) continue; // dijstra looks for the shortest edge in unvisited vertex
+            
+            for (int[] neighborPair: graph[u]) {
+                int v = neighborPair[0];
+                int distanceUV = neighborPair[1];
+                
+                if (distances[u] + distanceUV < distances[v]) {
+                    distances[v] = distances[u] + distanceUV;
+                    
+                    pq.offer(new int[]{v, distances[v]});
+                }
+            }
+        }
+
+        return distances;
+    }
+    
+    // Return total count of restricted path from src to n
+    public int dfs(int src, int n, List<int[]>[] graph, int[] distances, Integer[] memo) {
+        if (memo[src] != null) return memo[src];
+        if (src == n) return 1;
+        
+        int cnt = 0;
+        
+        // Visit all src's neighbors
+        for (int[] neighborPair: graph[src]) {
+            int neighbor = neighborPair[0];
+            if (distances[src] > distances[neighbor]) {
+                cnt = (cnt + dfs(neighbor, n, graph, distances, memo)) % 1000000007; 
+            }
+        }
+        
+        memo[src] = cnt;
+        return cnt;
+    }
+}
+```
+
 #### 6.2 Dijkstra Variant | Dijkstra on mask
 
 - [x] 1066. Campus Bikes II
