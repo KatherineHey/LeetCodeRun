@@ -222,10 +222,10 @@ class Solution {
 }
 ```
 
-#### 2. HashMap + BFS Traversal
-- [x] 133 Clone Graph - https://leetcode.com/problems/clone-graph/ [checkback 7/4]
+#### 2. [BFS] Shortest path | HashMap + BFS Traversal
+- [ ] 1293. Shortest Path in a Grid with Obstacles Elimination [TODO 7/6]
 
-#### Clone Graph
+- [x] 133 Clone Graph - https://leetcode.com/problems/clone-graph/ [checkback 7/8]
 ```java
     public Node cloneGraph(Node node) {
         if (node == null)
@@ -246,12 +246,15 @@ class Solution {
             
             // Going through neighbors to rebuild edges of cur
             for (Node nei: cur.neighbors) {
-                // Clone the neighbor if not exist
+                // Since it's a graph (could have cycle), you could have cloned the node already
+                // Clone the neighbor node only if not already exists
                 if (!map.containsKey(nei)) {
                     map.put(nei, new Node(nei.val));
                     q.offer(nei);
                 }
                 
+                // Always add neighbor to cur's neighbors list
+                // Since this is the first time reaching neighbor node from cur
                 map.get(cur).neighbors.add(map.get(nei));
             }
         }
@@ -261,10 +264,47 @@ class Solution {
 ```
 
 
-#### 3 DFS + memo | Connected components/ Grid
+#### 3 [DFS] memo | connected components/ grid | DP mask
 
-- [x] 417 Pacific Atlantic Water Flow - https://leetcode.com/problems/pacific-atlantic-water-flow/
+- [x] 417.Pacific Atlantic Water Flow - https://leetcode.com/problems/pacific-atlantic-water-flow/
 - [x] 200.Number of Islands: Each time going into a land, dfs and mark all attaching land to water, keep a counter out of dfs.
+- [x] 216.Graph valid tree: # of edge = # of nodes-1 && use visited hashSet to go through all nodes
+
+```java
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        if (edges.length != n-1) return false;
+        
+        // DFS to visit all nodes, check if there's cycle or separated island
+        HashSet<Integer> visited = new HashSet<Integer>();
+        
+        List<Integer>[] graph = new ArrayList[n];
+        for (int i= 0 ; i < n; i++) {
+            graph[i] = new ArrayList<Integer>();
+        }
+        
+        for (int[] edge: edges) {
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+        
+        dfs(graph, 0, visited);
+        
+        return visited.size() == n;
+    }
+    
+    public void dfs(List<Integer>[] graph, int node, HashSet<Integer> visited) {
+        if (visited.contains(node)) {
+            return;
+        }
+        
+        visited.add(node);
+        for (int neighbor : graph[node]) {
+            dfs(graph, neighbor, visited);
+        }
+    }
+}
+```
 
 #### 4 Union Find | Connected components
 
