@@ -223,9 +223,67 @@ class Solution {
 ```
 
 #### 2. [BFS] Shortest path | HashMap + BFS Traversal
-- [ ] 1293. Shortest Path in a Grid with Obstacles Elimination [TODO 7/6]
+- [x] 1293. Shortest Path in a Grid with Obstacles Elimination 
+```java
+public int shortestPath(int[][] grid, int k) {
+    int[][] dirs = new int[][]{{0,1}, {1,0}, {0,-1}, {-1, 0}};
+    int m = grid.length;
+    int n = grid[0].length;
 
-- [x] 133 Clone Graph - https://leetcode.com/problems/clone-graph/ [checkback 7/8]
+    if (m == 1 && n == 1) return 0;
+
+    // Number of obstacles need to be removed reaching i j
+    int[][] obstacles = new int[m][n];
+    for (int[] row: obstacles) {
+        Arrays.fill(row, Integer.MAX_VALUE);
+    }
+
+    Deque<int[]> queue = new LinkedList<int[]>();
+
+    queue.add(new int[]{0, 0});
+    obstacles[0][0] = 0;
+    int steps = 1;
+
+    // BFS
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        while (size > 0) {
+            int[] node = queue.poll();
+            size--;
+            int i = node[0]; 
+            int j = node[1];
+            int curNodeObstacles = obstacles[i][j];
+
+            for (int[] dir: dirs) {
+                int newi = i + dir[0];
+                int newj = j + dir[1];
+                if (newi >= 0 && newi < m && newj >= 0 && newj < n) {
+                    int newObstacle = grid[newi][newj] == 1? 1: 0;
+
+                    // There's another route reaching here with fewer obstacles
+                    if (obstacles[newi][newj] <= curNodeObstacles + newObstacle) {
+                        continue;
+                    }
+
+                    if (curNodeObstacles + newObstacle <= k) {
+                        if (newi == m-1 && newj == n-1)
+                            return steps;
+
+                        obstacles[newi][newj] = curNodeObstacles + newObstacle;
+                        queue.add(new int[]{newi, newj});
+                    }
+                }
+            }
+        }
+
+        steps++;
+    }
+
+    return -1;
+}
+```
+
+- [x] 133 Clone Graph - https://leetcode.com/problems/clone-graph/ 
 ```java
     public Node cloneGraph(Node node) {
         if (node == null)
