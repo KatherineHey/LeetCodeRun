@@ -35,8 +35,6 @@ Any two vertices are connected by _exactly_ one path. So naturally the question 
 
 144. Preorder Traversal
 
-Let’s walk through the above spell using an example tree.
-![image](https://user-images.githubusercontent.com/62370578/176948288-4cfc6d6e-91dd-4d77-be1b-74ba043de5f7.png)
 
 ```java
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -66,9 +64,9 @@ Let’s walk through the above spell using an example tree.
 
 2] How do we extend this DFS process to general graphs or graphs disguised as matrices ( as in most LC problems). ( Include a mechanism to track visited)
 
-#### Why
+#### Spell walk through && Why
 
-![image](https://user-images.githubusercontent.com/62370578/176949216-033172fc-e5ac-4ff5-8705-31fe9805d2a7.png)
+<img src="https://user-images.githubusercontent.com/62370578/176948288-4cfc6d6e-91dd-4d77-be1b-74ba043de5f7.png" width="350px" /><img src="https://user-images.githubusercontent.com/62370578/176949216-033172fc-e5ac-4ff5-8705-31fe9805d2a7.png" width="300px" />
 
 
 #### Concluding thoughts on BFS :
