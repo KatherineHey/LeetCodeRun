@@ -81,21 +81,42 @@ Any two vertices are connected by _exactly_ one path. So naturally the question 
 - [x] 2115.Find All Possible Recipes from Given Supplies
 - [x] 207.Course Schedule
 ```java
-    public boolean canFinish(int n, int[][] prerequisites) {
-        ArrayList<Integer>[] G = new ArrayList[n];
-        int[] degree = new int[n];
-        ArrayList<Integer> bfs = new ArrayList();
-        for (int i = 0; i < n; ++i) G[i] = new ArrayList<Integer>();
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        ArrayList<Integer>[] G = new ArrayList[numCourses];
+        int[] degree = new int[numCourses];
+        int[] res = new int[numCourses];
+        int index = 0;
+        
+        Deque<Integer> queue = new LinkedList();
+        
+        for (int i = 0; i < numCourses; i++) G[i] = new ArrayList<Integer>();
         for (int[] e : prerequisites) {
             G[e[1]].add(e[0]);
             degree[e[0]]++;
         }
-        for (int i = 0; i < n; ++i) if (degree[i] == 0) bfs.add(i);
-        for (int i = 0; i < bfs.size(); ++i)
-            for (int j: G[bfs.get(i)])
-                if (--degree[j] == 0) bfs.add(j);
-        return bfs.size() == n;
+        
+        for (int i = 0; i < numCourses; i++) {
+            if (degree[i] == 0) {
+                queue.add(i);
+                res[index++] = i;
+                
+            }
+        }
+        
+        while (!queue.isEmpty()) {
+            int prerequisite = queue.poll(); // Already finished this prerequisite course.
+            
+            for (int j: G[prerequisite]) {
+                if (--degree[j] == 0) {
+                    queue.add(j);
+                    res[index++] = j;
+                }
+            }
+        }
+        
+        return index == numCourses? res: new int[0];
     }
+
 ```
 
 
