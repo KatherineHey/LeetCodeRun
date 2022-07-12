@@ -120,7 +120,7 @@ Any two vertices are connected by _exactly_ one path. So naturally the question 
 ```
 
 
-- [ ] 269.Alien Dictionary
+- [x] 269.Alien Dictionary
 
 ```
 There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you.
