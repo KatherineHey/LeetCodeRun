@@ -1,0 +1,26 @@
+### EDF: Earliest Deadline First
+Earliest deadline first (EDF) or least time to go is a dynamic priority scheduling algorithm used in real-time operating systems to place processes in a priority queue. Whenever a scheduling event occurs (task finishes, new task released, etc.) the queue will be searched for the process closest to its deadline. This process is the next to be scheduled for execution.
+
+EDF is an optimal scheduling algorithm on preemptive uniprocessors, in the following sense: if a collection of independent jobs, each characterized by an arrival time, an execution requirement and a deadline, can be scheduled (by any algorithm) in a way that ensures all the jobs complete by their deadline, the EDF will schedule this collection of jobs so they all complete by their deadline. 
+
+e.g. [ [1,4], [2,3], [3,4] ], the interval with early start might be very long and incompatible with many intervals. But if we choose the interval that ends early, we'll have more space left to accommodate more intervals.
+
+
+435. Non-overlapping Intervals
+```java
+public int eraseOverlapIntervals(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1]));
+        
+        int[] pre = intervals[0];
+        int end = pre[1];
+        int maxNonOverlapCnt = 1;
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] >= end) {
+                maxNonOverlapCnt++;
+                end = intervals[i][1];
+            }
+        }
+        
+        return intervals.length - maxNonOverlapCnt;
+    }
+```
