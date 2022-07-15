@@ -8,7 +8,7 @@ e.g. [ [1,4], [2,3], [3,4] ], the interval with early start might be very long a
 
 435. Non-overlapping Intervals
 ```java
-public int eraseOverlapIntervals(int[][] intervals) {
+    public int eraseOverlapIntervals(int[][] intervals) {
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1]));
         
         int[] pre = intervals[0];
@@ -27,7 +27,7 @@ public int eraseOverlapIntervals(int[][] intervals) {
 
 253. Meeting Rooms II
 ```java
- public int minMeetingRooms(int[][] intervals) {
+    public int minMeetingRooms(int[][] intervals) {
         int meetingsCnt = intervals.length;
         
         // Start
