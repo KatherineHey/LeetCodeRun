@@ -24,3 +24,40 @@ public int eraseOverlapIntervals(int[][] intervals) {
         return intervals.length - maxNonOverlapCnt;
     }
 ```
+
+253. Meeting Rooms II
+```java
+ public int minMeetingRooms(int[][] intervals) {
+        int meetingsCnt = intervals.length;
+        
+        // Start
+        int[] start = new int[meetingsCnt];
+        int[] end = new int[meetingsCnt];
+        
+        for (int i = 0; i <meetingsCnt; i++) {
+            start[i] = intervals[i][0];
+            end[i] = intervals[i][1];
+        }
+
+        Arrays.sort(start);
+        Arrays.sort(end);
+        
+        int p1 = 0; int p2 = 0;
+        int rooms = 0;
+        int maxRooms = 1;
+        
+        // Only need to care about meetings start not ending scenarios
+        // After all meetings start, rooms cnt will not increase
+        while (p1 < meetingsCnt && p2 < meetingsCnt) {
+            if (start[p1] < end[p2]) {
+                rooms++; p1++;
+                maxRooms = Integer.max(maxRooms, rooms);
+            } else {
+                rooms--;
+                p2++;
+            }
+        }
+
+        return maxRooms;
+    }
+```
