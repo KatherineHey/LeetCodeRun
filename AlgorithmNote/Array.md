@@ -36,22 +36,19 @@
         // Total count of chars in t.
         int cnt = t.length();
         
-        for (char c : t.toCharArray()) {
-            charCnt[c]++;
-        }
+        for (char c : t.toCharArray()) charCnt[c]++;
         
         // Sliding window to go through all chars in s
         // Memorize the min start, and min len of the sliding window
         int l = 0, r = 0, minLen = Integer.MAX_VALUE, minStart = Integer.MAX_VALUE;
         
         while (r < s.length()) {
-            char rightChar = s.charAt(r);
+            char endChar = s.charAt(r);
             
             // Find a match in t
-            if (charCnt[rightChar] > 0) cnt--;
+            if (charCnt[endChar] > 0) cnt--;
             
-            charCnt[rightChar]--;
-            r++;
+            charCnt[endChar]--; r++;
             
             // While match exists
             // Moving left pointer to find the min sliding window
@@ -59,15 +56,14 @@
                 if (r-l< minLen) {
                     minStart = l;
                     minLen = r - l; // not including r's char
-                } 
-                
-                char leftChar = s.charAt(l);
-                charCnt[leftChar]++;
-                // !!! All the non-existing chars in t would have been previously negative.
-                // Non-existing chars only bring count to 0. Therefore, if cnt > 0 means it's a char exists in t
-                if (charCnt[leftChar] > 0) {
-                    cnt++;
                 }
+                
+                char startChar = s.charAt(l);
+                charCnt[startChar]++;
+                
+                // All the non existing chars in t would only bring count to 0
+                // Therefore, if cnt > 0 means it's a char exists in t
+                if (charCnt[startChar] > 0) cnt++;
                 
                 l++;
             }
