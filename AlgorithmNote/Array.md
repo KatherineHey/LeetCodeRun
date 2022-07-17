@@ -49,8 +49,8 @@
             
             // Find a match in t
             if (charCnt[rightChar] > 0) cnt--;
-            charCnt[rightChar]--;
             
+            charCnt[rightChar]--;
             r++;
             
             // While match exists
