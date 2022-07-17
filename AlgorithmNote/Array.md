@@ -1,5 +1,47 @@
 ### Sliding window
 
+
+##### Fixed size sliding window
+- [x] 567. Permutation in String
+```java
+    public boolean checkInclusion(String s1, String s2) {
+        // Fixed window size len1
+        int len1 = s1.length();
+        int len2 = s2.length();
+        
+        int[] cnt = new int[26];
+        char[] chars1 = s1.toCharArray();
+        
+        for (int i = 0; i < chars1.length; i++) {
+            cnt[chars1[i] - 'a']++;
+        }
+        
+        char[] chars2 = s2.toCharArray();
+        
+        for (int i = 0; i < chars2.length; i++) {
+            cnt[chars2[i] - 'a']--;
+            
+            // Moving out of the fixed sliding window, restore
+            if (i >= len1) cnt[chars2[i-len1] - 'a']++;
+            
+            if (AllZeroes(cnt)) return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean AllZeroes (int[] arr) {
+        for (int element: arr) {
+            if (element != 0) return false;
+        }
+        
+        return true;
+    }
+```
+
+##### Min/ fixed size sliding window with criteria
+
+
 - [x] 3. Longest subarray without repeating character
 
 ```java
@@ -50,7 +92,7 @@
             
             charCnt[endChar]--; r++;
             
-            // While match exists
+            // !! While match exists
             // Moving left pointer to find the min sliding window
             while (cnt == 0) { 
                 if (r-l< minLen) {
@@ -61,7 +103,7 @@
                 char startChar = s.charAt(l);
                 charCnt[startChar]++;
                 
-                // All the non existing chars in t would only bring count to 0
+                // !!! All the non existing chars in t would only bring count to 0
                 // Therefore, if cnt > 0 means it's a char exists in t
                 if (charCnt[startChar] > 0) cnt++;
                 
