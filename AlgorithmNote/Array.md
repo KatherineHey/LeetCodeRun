@@ -63,8 +63,8 @@
                 
                 char leftChar = s.charAt(l);
                 charCnt[leftChar]++;
-                // !!! All the non existing chars in t would have been previously negative.
-                // Therefore only bring count to 0, if cnt > 0 means it's a char exists in t
+                // !!! All the non-existing chars in t would have been previously negative.
+                // Non-existing chars only bring count to 0. Therefore, if cnt > 0 means it's a char exists in t
                 if (charCnt[leftChar] > 0) {
                     cnt++;
                 }
