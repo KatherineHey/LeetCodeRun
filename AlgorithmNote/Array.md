@@ -1,6 +1,3 @@
-### Sliding window
-
-
 ##### Fixed size sliding window
 - [x] 567.Permutation in String
 ```java
