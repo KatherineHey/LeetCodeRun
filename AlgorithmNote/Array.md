@@ -2,7 +2,7 @@
 
 
 ##### Fixed size sliding window
-- [x] 567. Permutation in String
+- [x] 567.Permutation in String
 ```java
     public boolean checkInclusion(String s1, String s2) {
         // Fixed window size len1
@@ -39,10 +39,10 @@
     }
 ```
 
-##### Min/ fixed size sliding window with criteria
+##### Sliding window 
 
 
-- [x] 3. Longest subarray without repeating character
+- [x] 3.Longest subarray without repeating character
 
 ```java
   public int lengthOfLongestSubstring(String s) {
@@ -69,7 +69,7 @@
     }
 ```
 
-- [x] 76. Minimum Window Substring
+- [x] 76.Minimum Window Substring
 ```java
     public String minWindow(String s, String t) {
         // Count of each char in t
@@ -112,6 +112,50 @@
         }
         
         return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
+    }
+```
+
+##### Array tricks
+- [x] 152.Maximum Product Subarray 
+```java
+    public int maxProduct(int[] nums) {
+        int max = nums[0];
+        int min = nums[0];
+        int currMax = 1;
+        int currMin = 1;
+        
+        for (int num : nums) {
+            int tmpMax = Math.max(num, Math.max(currMax * num, currMin * num));
+            int tmpMin = Math.min(num, Math.min(currMin * num, currMax * num));
+            
+            currMax = tmpMax;
+            currMin = tmpMin;
+            
+            max = Math.max(max, currMax);
+            min = Math.min(min, currMin);
+        }
+        
+        return max;
+    }
+```
+
+##### Two pointers
+- [x] 11. Container With Most Water
+```java
+    public int maxArea(int[] height) {
+        int p1 = 0, p2 = height.length-1;
+        int maxArea = Integer.MIN_VALUE;
+        
+        while (p1 < p2) {
+            maxArea = Math.max(maxArea, Math.min(height[p1], height[p2]) * (p2-p1));
+            if (height[p1] < height[p2]) {
+                p1++;
+            } else {
+                p2--;
+            }
+        }
+        
+        return maxArea;
     }
 ```
 
