@@ -113,7 +113,7 @@ The point where they first meet is the start of the cycle.
 
 ![image](https://user-images.githubusercontent.com/62370578/180663967-8c26d835-1600-45b1-b4e5-c0a3c6c7d40d.png)
 
--[x] 142. Linked List Cycle II
+- [x] 142. Linked List Cycle II
 ```java
     public ListNode detectCycle(ListNode head) {
         if (head == null || head.next == null) 
