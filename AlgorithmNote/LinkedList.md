@@ -142,3 +142,30 @@ The point where they first meet is the start of the cycle.
 ##### LRU Cache
 
 ##### Copy list with random pointer
+```java
+    public Node copyRandomList(Node head) {
+        if (head == null)
+            return null;
+        
+        Node current = head;
+        HashMap<Node,Node> oldNewMap = new HashMap<Node, Node>();
+        Node newCurrent = new Node(-1);
+        
+        // loop through 1st round to get all the nodes
+        while (current != null) {
+            newCurrent.next = new Node(current.val);
+            newCurrent = newCurrent.next;
+            oldNewMap.put(current, newCurrent);
+            current = current.next;
+        }
+        
+        // loop through second round to get all the random set up
+        current = head;
+        while (current != null) {
+            oldNewMap.get(current).random = oldNewMap.getOrDefault(current.random, null);
+            current = current.next;
+        }
+        
+        return oldNewMap.get(head);
+    }
+```
