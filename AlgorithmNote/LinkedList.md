@@ -203,22 +203,24 @@ class Solution {
         return mergeTwoLists(l1, l2);
     }
     
-    public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
-        ListNode prehead = new ListNode(-1);
-        ListNode pre = prehead;
-        while (head1 != null || head2 != null) {
-            if ((head1 != null && head2 != null && head1.val < head2.val) || (head1 != null && head2 == null)) {
-                prehead.next = new ListNode(head1.val);
-                head1 = head1.next;
+    public ListNode merge(ListNode list1, ListNode list2) {
+        ListNode dummyHead = new ListNode();
+        ListNode tail = dummyHead;
+        while (list1 != null && list2 != null) {
+            if (list1.val < list2.val) {
+                tail.next = list1;
+                list1 = list1.next;
             } else {
-                prehead.next = new ListNode(head2.val);
-                head2 = head2.next;
+                tail.next = list2;
+                list2 = list2.next;
             }
             
-            prehead = prehead.next;
+            tail = tail.next;
+            
         }
         
-        return pre.next;
+        tail.next = (list1 != null) ? list1 : list2;
+        return dummyHead.next;
     }
 }
 ```
