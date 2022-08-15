@@ -169,3 +169,56 @@ The point where they first meet is the start of the cycle.
         return oldNewMap.get(head);
     }
 ```
+
+##### Sort list
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        
+        // Step1: Get the head of the list and head of the middle of the list
+        ListNode slow = head; // slow will be the head of the middle of the list
+        ListNode fast = head;
+        ListNode pre = null;
+        
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            pre = slow;
+            slow = slow.next;
+        }
+        
+        pre.next = null;
+        
+        // Step 2: sort each half
+        ListNode l1 = sortList(head);
+        ListNode l2 = sortList(slow);
+        return mergeTwoLists(l1, l2);
+    }
+    
+    public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
+        ListNode prehead = new ListNode(-1);
+        ListNode pre = prehead;
+        while (head1 != null || head2 != null) {
+            if ((head1 != null && head2 != null && head1.val < head2.val) || (head1 != null && head2 == null)) {
+                prehead.next = new ListNode(head1.val);
+                head1 = head1.next;
+            } else {
+                prehead.next = new ListNode(head2.val);
+                head2 = head2.next;
+            }
+            
+            prehead = prehead.next;
+        }
+        
+        return pre.next;
+    }
+}
+```
