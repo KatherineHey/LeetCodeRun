@@ -470,7 +470,7 @@ Also called an ordered or sorted binary tree, is a rooted binary tree data struc
      * @param root
      * @return
      */
-    public List<Integer> morisPreorderTraversal(TreeNode root) {
+    public List<Integer> morrisPreorderTraversal(TreeNode root) {
         List<Integer> results = new ArrayList<>();
         while (root != null) {
             if (root.left == null) {
@@ -517,7 +517,7 @@ Also called an ordered or sorted binary tree, is a rooted binary tree data struc
 ```
              
 ```java 
-    public List<Integer> InorderMorisTraversal(TreeNode current) {
+    public List<Integer> InorderMorrisTraversal(TreeNode current) {
         List<Integer> results = new ArrayList<>();
         while (current != null) {
             if (current.left == null) {
