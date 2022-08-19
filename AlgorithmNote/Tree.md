@@ -303,6 +303,29 @@ public class Codec {
 
 ```
 
+# Right side view
+```java
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        rvdfs(root, arr, 0);
+        return arr;    
+    }
+    
+    public void rvdfs(TreeNode curr, List<Integer> result, int currDepth) {
+        if (curr == null)
+            return;
+        
+        if (currDepth == result.size()) {
+            result.add(curr.val);
+        }
+        
+        rvdfs(curr.right, result, currDepth+1);
+        rvdfs(curr.left, result, currDepth+1);
+    }
+}
+```
+
 # Boundary Traversal Anticlockwise
 
 ```java
