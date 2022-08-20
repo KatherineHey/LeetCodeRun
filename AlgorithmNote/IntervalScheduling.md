@@ -73,8 +73,7 @@ e.g. [ [1,4], [2,3], [3,4] ], the interval with early start might be very long a
         for (int[] shift : shifts) {
             int start = shift[0], end = shift[1], dir = (shift[2] == 1)?1:-1;
             arr[start] += dir;
-            if (end+1 < s.length())
-                arr[end+1] -= dir;
+            arr[end+1] -= dir;
         }
         
         // Prefix sum
