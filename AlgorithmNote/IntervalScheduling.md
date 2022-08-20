@@ -61,3 +61,35 @@ e.g. [ [1,4], [2,3], [3,4] ], the interval with early start might be very long a
         return maxRooms;
     }
 ```
+
+#### Use prefix sum to mark boarder of intervals, 2381. Shifting Letters II
+```java
+    public String shiftingLetters(String s, int[][] shifts) {
+        int n=s.length();
+        int arr[]=new int[n+1];
+        
+        // Range update for the startIdx and endIdx+1
+        // This is marking boarder for later prefix sum consumption
+        for (int[] shift : shifts) {
+            int start = shift[0], end = shift[1], dir = (shift[2] == 1)?1:-1;
+            arr[start] += dir;
+            if (end+1 < s.length())
+                arr[end+1] -= dir;
+        }
+        
+        // Prefix sum
+        for(int i = 1; i < n+1; i++){
+            arr[i]=arr[i]+arr[i-1];  
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < n; i++){
+            int increaseBy=(s.charAt(i)-'a'+arr[i])%26;
+            increaseBy=(increaseBy+26)%26;
+            
+            //converting into string
+            sb.append((char)('a'+increaseBy));
+        }
+        return sb.toString();
+    }
+```
