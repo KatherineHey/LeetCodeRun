@@ -78,7 +78,7 @@ e.g. [ [1,4], [2,3], [3,4] ], the interval with early start might be very long a
         
         // Prefix sum
         for(int i = 1; i < n+1; i++){
-            arr[i]=arr[i]+arr[i-1];  
+            arr[i]+=arr[i-1];  
         }
 
         StringBuilder sb = new StringBuilder();
