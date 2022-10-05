@@ -28,3 +28,9 @@ for (int[] row: maxLength)
 // asc | min heap
 PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a,b) -> Integer.compare(a[0], b[0]));
 ```
+
+```java
+        // 1 [], expected: [0]
+        if (n == 1) return Collections.singletonList(0);
+        
+```
