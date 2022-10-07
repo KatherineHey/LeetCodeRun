@@ -4,6 +4,8 @@ distances.computeIfAbsent(manhattanDistance, pair-> new ArrayList<int[]>()).add(
 ```
 
 ```java
+Treemap
+
 // Tree map is order, therefore going asc through manhattan distances
 for(Map.Entry<Integer, ArrayList<int[]>> entry : distances.entrySet()) {
     Integer distance = entry.getKey();
@@ -11,6 +13,17 @@ for(Map.Entry<Integer, ArrayList<int[]>> entry : distances.entrySet()) {
     if (pairs.size() > 1) {
         // Asc sort, first choose smallest worker [0], then smallest bike[1]
         Collections.sort(pairs, (a,b) -> (a[0] == b[0]? a[1]-b[1]: a[0]-b[0]));
+    }
+}
+
+
+TreeMap<Integer, Integer> dp = new TreeMap<>();
+dp.put(0, 0);
+for (int[] job : jobs) {
+    // using current job profit
+    int withCurJobProfit = dp.floorEntry(job[0]).getValue() + job[2];
+    if (withCurJobProfit > dp.lastEntry().getValue()) {
+        dp.put(job[1], withCurJobProfit);
     }
 }
 ```
