@@ -43,7 +43,7 @@ PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a,b) -> Integer.compare(a[0]
 ```
 
 ```java
-        // 1 [], expected: [0]
-        if (n == 1) return Collections.singletonList(0);
+// 1 [], expected: [0]
+if (n == 1) return Collections.singletonList(0);
         
 ```
