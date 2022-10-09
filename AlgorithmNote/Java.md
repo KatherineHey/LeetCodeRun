@@ -47,3 +47,9 @@ PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a,b) -> Integer.compare(a[0]
 if (n == 1) return Collections.singletonList(0);
         
 ```
+
+```java
+char[] ca = new char[26];
+for (char c : s.toCharArray()) ca[c - 'a']++;
+String keyStr = String.valueOf(ca);
+```
