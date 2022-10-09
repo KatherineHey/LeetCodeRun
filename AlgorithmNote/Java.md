@@ -1,6 +1,8 @@
 ```java
 TreeMap<Integer, ArrayList<int[]>> distances = new TreeMap<Integer, ArrayList<int[]>>();
 distances.computeIfAbsent(manhattanDistance, pair-> new ArrayList<int[]>()).add(new int[]{i, j});
+
+return new ArrayList<>(strmap.values());
 ```
 
 ```java
