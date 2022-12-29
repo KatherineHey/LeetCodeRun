@@ -216,6 +216,62 @@ N-ary Tree Level Order Traversal
     }
 ```
 
+#    Construct Binary Tree from Preorder and Inorder Traversal
+```java
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int len = preorder.length;
+        
+        return buildTree(preorder, inorder, 0, len-1, 0, len-1);
+    }
+    
+    // preStart: start index of preorder array, includsive
+    // preEnd: end index of preorder array, inclusive
+    public TreeNode buildTree(int[] preorder, int[] inorder, int preStart, int preEnd, int inStart, int inEnd) {
+        TreeNode node = new TreeNode(preorder[preStart]);
+        
+        // Since preorder and inorder arrays contain unique values
+        // Find node'val in inorder
+        int nodeIdxInInorder = findVal(node.val, inorder, inStart, inEnd);
+        int leftSubTreeSize = nodeIdxInInorder - inStart;
+        int rightSubTreeSize = inEnd - nodeIdxInInorder;
+        
+        if (leftSubTreeSize > 0)
+            node.left = buildTree(preorder, inorder, preStart+1, preStart + leftSubTreeSize, inStart, nodeIdxInInorder-1);
+        
+        if (rightSubTreeSize > 0)
+            node.right = buildTree(preorder, inorder, preStart + leftSubTreeSize + 1, preEnd, nodeIdxInInorder + 1, inEnd);
+        
+        return node;
+    }
+    
+    // return index of a given value in the array within left and right boundaries
+    public int findVal(int val, int[] arr, int l, int r) {
+        for (int i = l; i <= r; i++) {
+            if (val == arr[i]) return i;
+        }
+        
+        return -1; // shouldn't happen
+    }
+}
+```
+
 #    Maximum Depth of N-ary Tree
 
 ```java
