@@ -162,3 +162,39 @@ the toCharArray() is not inside the loop body; it's only called once, and then t
 (The for-each loop is different than the general for-loop, which evaluates the stop-condition each iteration.) – 
 not-just-yeti
 ```
+
+
+##### Range caching
+- [ ] 370. Range Addition
+
+You are given an integer length and an array updates where updates[i] = [startIdxi, endIdxi, inci].
+
+You have an array arr of length length with all zeros, and you have some operation to apply on arr. In the ith operation, you should increment all the elements arr[startIdxi], arr[startIdxi + 1], ..., arr[endIdxi] by inci.
+
+Return arr after applying all the updates.
+
+```java
+ public int[] getModifiedArray(int length, int[][] updates) {
+
+    int[] res = new int[length];
+     for(int[] update : updates) {
+        int value = update[2];
+        int start = update[0];
+        int end = update[1];
+        
+        res[start] += value;
+        
+        if(end < length - 1)
+            res[end + 1] -= value;
+        
+    }
+    
+    int sum = 0;
+    for(int i = 0; i < length; i++) {
+        sum += res[i];
+        res[i] = sum;
+    }
+    
+    return res;
+}
+```
