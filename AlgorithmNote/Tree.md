@@ -272,6 +272,15 @@ class Solution {
 }
 ```
 
+#    Construct Binary Tree from String
+
+https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20String.html
+
+
+```java
+TODO
+```
+
 #    Maximum Depth of N-ary Tree
 
 ```java
