@@ -276,9 +276,37 @@ class Solution {
 
 https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20String.html
 
-
 ```java
-TODO
+// e.g. Input: s = "4(2(3)(1))(6(5))"
+// Output: [4,2,6,3,1,5]
+    public TreeNode str2tree(String s) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+
+        for (int i = 0, j = i; i < s.length(); i++, j = i) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                continue;
+            } else if (c == ')') {
+                TreeNode child = stack.pop();
+                TreeNode parent = stack.peek();
+                if (parent.left == null) {
+                    parent.left = child;
+                } else {
+                    parent.right = child;
+                }
+            } else if(Character.isDigit(c) || c == '-'){
+                while(i + 1 < s.length() && Character.isDigit(s.charAt(i + 1))) {
+                    i++;
+                }
+
+                TreeNode node = new TreeNode(Integer.valueOf(s.substring(j, i + 1)));
+                stack.push(node);
+            }
+        } 
+
+        return stack.peek();
+    }
+
 ```
 
 #    Maximum Depth of N-ary Tree
