@@ -216,7 +216,7 @@ N-ary Tree Level Order Traversal
     }
 ```
 
-#    Construct Binary Tree from Preorder and Inorder Traversal
+#    :heart: Construct Binary Tree from Preorder and Inorder Traversal 
 ```java
 
 /**
@@ -308,6 +308,29 @@ https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20Stri
     }
 
 ```
+
+# :heart:   Flatten Binary Tree to Linked List
+
+```java
+
+   public void flatten(TreeNode root) {
+        if (root == null) return;
+
+        Deque<TreeNode> s = new ArrayDeque<>();
+        s.push(root);
+
+        while (!s.isEmpty()) {
+            TreeNode cur = s.pop();
+            if (cur.right != null) s.push(cur.right);
+            if (cur.left != null) s.push(cur.left);
+
+            if (!s.isEmpty()) cur.right = s.peek();
+
+            cur.left = null;
+        }
+    }
+```
+
 
 #    Maximum Depth of N-ary Tree
 
