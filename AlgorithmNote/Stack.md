@@ -1,4 +1,4 @@
-❤️ # 42. Trapping Rain Water
+# ❤️ 42. Trapping Rain Water
 
 每次从栈里弹出的lowHeight相当于新的底部，每次只需要考虑两边bar已经新的底部形成的区域。因为新的底部所能围成的区域之前已经计算过了。
 
