@@ -1,4 +1,40 @@
-# Largest Rectangle in Histogram
+❤️ # 42. Trapping Rain Water
+
+每次从栈里弹出的lowHeight相当于新的底部，每次只需要考虑两边bar已经新的底部形成的区域。因为新的底部所能围成的区域之前已经计算过了。
+
+例如 3,1,2,3 （index: 0,1,2,3）
+
+初始：栈中存在0,1 (idx)。 
+
+2 出现，弹出1，此时计算3,1,2中间的小坑：1  (num)
+
+栈中存在0,2 (idx)。
+
+3出现，弹出2,2作为新的底部，计算3,2,3 这段漂浮的水条 = (3-0-1)* (3-2)
+
+```java
+    public int trap(int[] height) {
+        // Mono decreasing
+        Deque<Integer> stack = new ArrayDeque<>();
+        int res = 0;
+        for (int i = 0; i < height.length; i++) {
+            int rightHeight = height[i];
+            while (!stack.isEmpty() && height[stack.peek()] < rightHeight) {
+                int lowHeight = height[stack.pop()];
+
+                if (!stack.isEmpty()) {
+                    res += (Math.min(height[stack.peek()], rightHeight) - lowHeight) * (i - stack.peek() - 1);
+                }
+            }
+
+            stack.push(i);
+        }
+
+        return res;
+    }
+```
+
+# 84. Largest Rectangle in Histogram
 ```java
 public int largestRectangleArea(int[] heights) {
         // Mono increasing stack, pop everything higher than current.
