@@ -35,6 +35,24 @@
         
         return results;
     }
+    
+    public List<Integer> inorderTraversal(TreeNode root) {
+        Stack<TreeNode> treeNodes = new Stack<TreeNode>();
+        List<Integer> result = new ArrayList<Integer>();
+
+        while (root != null || !treeNodes.isEmpty()) {
+            if (root != null) {
+                treeNodes.push(root);
+                root = root.left;
+            } else {
+                root = treeNodes.pop();
+                result.add(root.val); // only different from preorder
+                root = root.right;
+            }
+        }
+
+        return result;
+    }
 
 ```
 
