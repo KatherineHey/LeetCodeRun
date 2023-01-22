@@ -371,7 +371,7 @@ https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20Stri
 ```
 
 
-#    Lowest Common Ancestor - Leetcode
+#    :heart: Lowest Common Ancestor - Leetcode
 
 ```java
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -538,6 +538,72 @@ class Solution {
         maxPath = Math.max(maxPath, Math.max(root.val, Math.max(leftPath, Math.max(rightPath, completePath))));
         return Math.max(leftPath, Math.max(rightPath, root.val));
     }
+}
+```
+
+
+# 987 Vertical Order Traversal of a Binary Tree
+```java
+// first sort on x, then sort on y, then sort on the node's val
+    TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> m = new TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>>();
+    
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
+        
+        dfs(root, 0, 0);
+        
+        // Treemap is ordered
+        for (TreeMap<Integer, PriorityQueue<Integer>> tm : m.values()) {
+            res.add(new ArrayList<>());
+            
+            for (PriorityQueue<Integer> pq : tm.values()) {
+                while (!pq.isEmpty()) {
+                    res.get(res.size()-1).add(pq.poll());    
+                }
+            }
+        }
+        
+        return res;
+    }
+    
+    public void dfs(TreeNode cur, int x, int y) {
+        if (!m.containsKey(x)) {
+            m.put(x, new TreeMap<>());
+            
+            m.get(x).put(y, new PriorityQueue<>());
+        } else if (!m.get(x).containsKey(y)) {
+            m.get(x).put(y, new PriorityQueue<>());
+        }
+        
+        m.get(x).get(y).offer(cur.val);
+        
+        if (cur.left != null)
+            dfs(cur.left, x-1, y+1);
+        if (cur.right != null)
+            dfs(cur.right, x+1, y+1);
+    }
+```
+   
+# :heart:2096. Step-By-Step Directions From a Binary Tree out of memory, needs bottom up approach
+
+```java
+private boolean find(TreeNode n, int val, StringBuilder sb) {
+    if (n.val == val) 
+        return true;
+    if (n.left != null && find(n.left, val, sb))
+        sb.append("L");
+    else if (n.right != null && find(n.right, val, sb))
+        sb.append("R");
+    return sb.length() > 0;
+}
+public String getDirections(TreeNode root, int startValue, int destValue) {
+    StringBuilder s = new StringBuilder(), d = new StringBuilder();
+    find(root, startValue, s);
+    find(root, destValue, d);
+    int i = 0, max_i = Math.min(d.length(), s.length());
+    while (i < max_i && s.charAt(s.length() - i - 1) == d.charAt(d.length() - i - 1))
+        ++i;
+    return "U".repeat(s.length() - i) + d.reverse().toString().substring(i);
 }
 ```
 
