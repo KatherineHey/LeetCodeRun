@@ -383,6 +383,41 @@ https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20Stri
     }
 ```
 
+#    :heart: 1110. Delete Nodes And Return Forest
+```java
+class Solution {
+    List<TreeNode> result = new ArrayList<TreeNode>();
+    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+        Set<Integer> set = new HashSet<Integer>();
+        for (int d: to_delete) {
+            set.add(d);
+        }
+        
+        if (!post(root, set)) result.add(root);
+      
+        
+        return result;
+    }
+    
+    public boolean post(TreeNode root, Set<Integer> set) {
+        if (root == null) return false;
+        
+        if (post(root.left, set)) root.left = null;
+        if (post(root.right, set)) root.right = null;
+        
+        // check if root exists in set
+        if (set.contains(root.val)) {
+            if (root.left != null) result.add(root.left);
+            if (root.right != null) result.add(root.right);
+            
+            return true;
+        }
+        
+        return false;
+    }
+}
+
+```
 
 #    Serialization and deserialization of trees - Leetcode
 
