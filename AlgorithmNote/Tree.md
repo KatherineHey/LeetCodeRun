@@ -399,13 +399,14 @@ class Solution {
         return result;
     }
     
+    // Return true if current root needs to be deleted, false else.
     public boolean post(TreeNode root, Set<Integer> set) {
         if (root == null) return false;
         
         if (post(root.left, set)) root.left = null;
         if (post(root.right, set)) root.right = null;
         
-        // check if root exists in set
+        // check if root exists in set, aka needs to be deleted
         if (set.contains(root.val)) {
             if (root.left != null) result.add(root.left);
             if (root.right != null) result.add(root.right);
