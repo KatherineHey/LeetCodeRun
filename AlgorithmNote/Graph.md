@@ -484,7 +484,7 @@ class Solution {
 ```
 
 
--[x] 329. Longest Increasing Path in a Matrix
+- [x] 329. Longest Increasing Path in a Matrix
 
 ```java
 class Solution {
