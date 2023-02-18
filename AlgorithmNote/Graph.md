@@ -480,8 +480,56 @@ class Solution {
         return neighborDenote;
     }
 }
+
 ```
 
+
+-[x] 329. Longest Increasing Path in a Matrix
+
+```java
+class Solution {
+    int longestIncreasingPath = 1;
+    public int longestIncreasingPath(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        Integer[][] memo= new Integer[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                dfs(i, j, matrix, m, n, 1, memo);
+            }
+        }
+        return longestIncreasingPath;
+    }
+
+    // pathLength is the longest path ending at i, j (inclusive)
+    // memo[i][j] is the longest path starting from i, j (inclusive)
+    public int dfs (int i, int j, int[][] matrix, int m, int n, int pathLength, Integer[][] memo) {
+        if (memo[i][j] != null) return memo[i][j];
+
+        int[][] directions = {{0,1}, {0,-1}, {-1,0}, {1,0}};
+        
+        int longestPathFromNeighbors = 0;
+
+        for (int[] dir: directions) {
+            int x = dir[0]+ i, y = dir[1] + j;
+            if (isValid(x, y, m, n) && matrix[x][y] > matrix[i][j]) {
+                longestPathFromNeighbors = Math.max(longestPathFromNeighbors, dfs(x, y, matrix, m, n, pathLength+1, memo));
+            }
+        }
+
+        memo[i][j] = longestPathFromNeighbors+1;
+        longestIncreasingPath = Math.max(longestIncreasingPath, memo[i][j]);
+        return memo[i][j];
+    }
+
+    public boolean isValid(int i, int j, int m, int n) {
+        if (i < 0 || i >= m || j < 0 || j >= n) return false;
+
+        return true;
+    }
+}
+
+```
 #### 4 Union Find | Connected components
 
 
