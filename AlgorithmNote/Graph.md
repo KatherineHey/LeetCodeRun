@@ -425,6 +425,63 @@ class Solution {
 }
 ```
 
+- [x] 2101. Detonate the Maximum Bombs
+
+
+```java
+class Solution {
+    public int maximumDetonation(int[][] bombs) {
+        // Create map based on bombs' radius
+        Map<Integer, ArrayList<Integer>> graph = new HashMap<Integer, ArrayList<Integer>>();
+        int m = bombs.length;
+
+        for (int i = 0; i < m; i++) {
+            int[] bomb = bombs[i];
+
+            for (int j = i+1; j < m; j++) {
+                int[] nextBomb = bombs[j];
+
+                double dist = Math.sqrt((long)(bomb[0] - nextBomb[0]) * (bomb[0] - nextBomb[0]) + (long)(bomb[1] - nextBomb[1]) * (bomb[1] - nextBomb[1]));
+
+                if (dist <= bomb[2]) {
+                    graph.computeIfAbsent(i, b-> new ArrayList<Integer>()).add(j);
+                }
+
+                if (dist <= nextBomb[2]) {
+                    graph.computeIfAbsent(j, b-> new ArrayList<Integer>()).add(i);
+                }
+            }
+        }
+
+        // DFS with memo of the if the bomb can be detonated
+        // maxBombs keep track of how many nodes can be visited in one go
+        int maxBombs = 1;
+        for (int i = 0; i < m; i++) {
+            boolean[] memo = new boolean[m];        
+        
+            maxBombs = Math.max(maxBombs, dfs(memo, i, graph));
+        }
+
+        return maxBombs;
+    }
+
+    public int dfs(boolean[] memo, int i, Map<Integer, ArrayList<Integer>> graph) {
+        if (memo[i]) return 0;
+
+        memo[i] = true; // marking visiting
+        int neighborDenote = 1; // itself
+        if (graph.containsKey(i)) {
+            for (int neighbor: graph.get(i)) {
+                if (!memo[neighbor]) // haven't visited
+                    neighborDenote += dfs(memo, neighbor, graph);
+            }
+        }
+
+        return neighborDenote;
+    }
+}
+```
+
 #### 4 Union Find | Connected components
 
 
