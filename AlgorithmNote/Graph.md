@@ -796,3 +796,43 @@ It is clear, that this complexity is optimal for a dense graph, i.e. when &nbsp;
 To accomplish that we can use a variation of multiple auxiliary data structures. The most efficient is the Fibonacci heap, which allows the first operation to run in &nbsp; &nbsp; , and the second operation in&nbsp; &nbsp; . Therefore we will get the complexity &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for Dijkstra's algorithm, which is also the theoretical minimum for the shortest path search problem. Therefore this algorithm works optimal, and Fibonacci heaps are the optimal data structure. There doesn't exist any data structure, that can perform both operations in , because this would also allow to sort a list of random numbers in linear time, which is impossible. Interestingly there exists an algorithm by Thorup that finds the shortest path in&nbsp; &nbsp; &nbsp; &nbsp;time, however only works for integer weights, and uses a completely different idea. So this doesn't lead to any contradictions. Fibonacci heaps provide the optimal complexity for this task. However they are quite complex to implement, and also have a quite large hidden constant.
 
 As a compromise you can use data structures, that perform both types of operations (extracting a minimum and updating an item) in &nbsp; &nbsp; . Then the complexity of Dijkstra's algorithm is&nbsp; &nbsp; &nbsp; &nbsp;.
+
+
+#### 7 Eulerian path
+
+- [x] 332. Reconstruct Itinerary
+
+```java
+class Solution {
+    public List<String> findItinerary(List<List<String>> tickets) {
+        // Use dfs to iterate through all possible itinerary 
+        // in a lexical order
+
+        // put all tickets into hashmap, <from, <to..>>
+        Map<String, PriorityQueue<String>> ticketsBySource = new HashMap<String, PriorityQueue<String>>();
+
+        for (List<String> ticket: tickets) {
+            String from = ticket.get(0);
+            String to = ticket.get(1);
+
+            ticketsBySource.computeIfAbsent(from, f -> new PriorityQueue<String>()).add(to);
+        }
+
+        // Always left from "JFK", guarantee to have an eulerian path
+        List<String> res = new ArrayList<>();
+        dfs(ticketsBySource, "JFK", res);
+
+        return res;
+    }
+
+    // Use dfs to find an eulerian path
+    public void dfs(Map<String, PriorityQueue<String>> ticketsBySource, String cur, List<String> res) {
+        PriorityQueue<String> destinations = ticketsBySource.get(cur);
+        while (destinations != null && !destinations.isEmpty()) {
+            dfs(ticketsBySource, destinations.poll(), res);
+        }
+
+        res.add(0, cur);
+    }
+}
+```
