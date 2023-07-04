@@ -1,5 +1,5 @@
 
-#    In-order(BOTH recursive and iterative) :star:
+##    In-order(BOTH recursive and iterative) :star:
 
 ### Tips: tackle various tree questions using inorder traversal, since BST has the property left subtree all nodes' values < middle < right subtree all nodes' values, essentially inorder traversal for BST creates an increasing list.
 
@@ -56,7 +56,7 @@
 
 ```
 
-#    Pre-order(BOTH recursive and iterative)
+##    Pre-order(BOTH recursive and iterative)
 ```java
 
     List<Integer> result = new ArrayList<>();
@@ -116,7 +116,7 @@
 
 ```
 
-#    Post-order(BOTH recursive and iterative)
+##    Post-order(BOTH recursive and iterative)
 
 ```java
 
@@ -175,7 +175,7 @@ class Solution {
 }
 ```
 
-# N-ary Tree Postorder Traversal
+## N-ary Tree Postorder Traversal
 
 ```java
 
@@ -202,7 +202,7 @@ class Solution {
     }
 ```
 
-# BFS / Level Order Traversal
+## BFS / Level Order Traversal
 
 N-ary Tree Level Order Traversal
 
@@ -234,7 +234,7 @@ N-ary Tree Level Order Traversal
     }
 ```
 
-#    :heart: Construct Binary Tree from Preorder and Inorder Traversal 
+##    :heart: Construct Binary Tree from Preorder and Inorder Traversal 
 ```java
 
 /**
@@ -290,7 +290,8 @@ class Solution {
 }
 ```
 
-#    Construct Binary Tree from String
+# Construct 
+##    Construct Binary Tree from String
 
 https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20String.html
 
@@ -350,7 +351,7 @@ https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20Stri
 ```
 
 
-#    Maximum Depth of N-ary Tree
+##    Maximum Depth of N-ary Tree
 
 ```java
     public int maxDepth(Node root) {
@@ -370,8 +371,8 @@ https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20Stri
     }
 ```
 
-
-#    :heart: Lowest Common Ancestor - Leetcode
+# Bottom up
+##    :heart: Lowest Common Ancestor - Leetcode
 
 ```java
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -383,7 +384,102 @@ https://www.jiakaobo.com/leetcode/536.%20Construct%20Binary%20Tree%20from%20Stri
     }
 ```
 
-#    :heart: 1110. Delete Nodes And Return Forest
+##    :heart: Find Leaves of Binary Tree - Leetcode
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        dfs(root, res);
+
+        return res;
+    }
+
+    public int dfs(TreeNode root, List<List<Integer>> res) {
+        if (root == null) return -1;
+
+        int left = dfs(root.left, res);
+        int right = dfs(root.right, res);
+        
+        // layer means how many layers from leaf, leaf layer is 0
+        int layer = Math.max(left, right) + 1;
+        if (res.size() <= layer) {
+            res.add(new ArrayList<Integer>());
+        }
+
+        res.get(layer).add(root.val);
+
+        return layer;
+    }
+}
+```
+
+## :heart:2096. Step-By-Step Directions From a Binary Tree out of memory, needs bottom up approach
+
+```java
+private boolean find(TreeNode n, int val, StringBuilder sb) {
+    if (n.val == val) 
+        return true;
+    if (n.left != null && find(n.left, val, sb))
+        sb.append("L");
+    else if (n.right != null && find(n.right, val, sb))
+        sb.append("R");
+    return sb.length() > 0;
+}
+public String getDirections(TreeNode root, int startValue, int destValue) {
+    StringBuilder s = new StringBuilder(), d = new StringBuilder();
+    find(root, startValue, s);
+    find(root, destValue, d);
+    int i = 0, max_i = Math.min(d.length(), s.length());
+    while (i < max_i && s.charAt(s.length() - i - 1) == d.charAt(d.length() - i - 1))
+        ++i;
+    return "U".repeat(s.length() - i) + d.reverse().toString().substring(i);
+}
+```
+
+
+## Binary Tree Maximum Path Sum
+``` java
+class Solution {
+    int maxPath = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        pathHelper(root);
+        return maxPath;
+    }
+    
+    // return max value of path going through root
+    public int pathHelper(TreeNode root) {
+        if (root == null) return 0;
+        
+        // max value from left tree 
+        // now find the max of all the four paths
+        int left = pathHelper(root.left);
+        int right = pathHelper(root.right);
+        int leftPath = root.val + left;
+        int rightPath = root.val + right;
+        int completePath = root.val + right + left;
+
+        maxPath = Math.max(maxPath, Math.max(root.val, Math.max(leftPath, Math.max(rightPath, completePath))));
+        return Math.max(leftPath, Math.max(rightPath, root.val));
+    }
+}
+```
+
+##    :heart: 1110. Delete Nodes And Return Forest
 ```java
 class Solution {
     List<TreeNode> result = new ArrayList<TreeNode>();
@@ -420,7 +516,7 @@ class Solution {
 
 ```
 
-#    Serialization and deserialization of trees - Leetcode
+##    Serialization and deserialization of trees - Leetcode
 
 ```java
 public class Codec {
@@ -473,7 +569,7 @@ public class Codec {
 
 ```
 
-# Right side view
+## Right side view
 ```java
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
@@ -496,7 +592,7 @@ class Solution {
 }
 ```
 
-# Boundary Traversal Anticlockwise
+## Boundary Traversal Anticlockwise
 
 ```java
 class Solution {
@@ -550,35 +646,9 @@ class Solution {
 }
 ```
 
-# Binary Tree Maximum Path Sum
-``` java
-class Solution {
-    int maxPath = Integer.MIN_VALUE;
-    public int maxPathSum(TreeNode root) {
-        pathHelper(root);
-        return maxPath;
-    }
-    
-    // return max value of path going through root
-    public int pathHelper(TreeNode root) {
-        if (root == null) return 0;
-        
-        // max value from left tree 
-        // now find the max of all the four paths
-        int left = pathHelper(root.left);
-        int right = pathHelper(root.right);
-        int leftPath = root.val + left;
-        int rightPath = root.val + right;
-        int completePath = root.val + right + left;
-
-        maxPath = Math.max(maxPath, Math.max(root.val, Math.max(leftPath, Math.max(rightPath, completePath))));
-        return Math.max(leftPath, Math.max(rightPath, root.val));
-    }
-}
-```
 
 
-# 987 Vertical Order Traversal of a Binary Tree
+## 987 Vertical Order Traversal of a Binary Tree
 ```java
 // first sort on x, then sort on y, then sort on the node's val
     TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> m = new TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>>();
@@ -620,30 +690,8 @@ class Solution {
     }
 ```
    
-# :heart:2096. Step-By-Step Directions From a Binary Tree out of memory, needs bottom up approach
 
-```java
-private boolean find(TreeNode n, int val, StringBuilder sb) {
-    if (n.val == val) 
-        return true;
-    if (n.left != null && find(n.left, val, sb))
-        sb.append("L");
-    else if (n.right != null && find(n.right, val, sb))
-        sb.append("R");
-    return sb.length() > 0;
-}
-public String getDirections(TreeNode root, int startValue, int destValue) {
-    StringBuilder s = new StringBuilder(), d = new StringBuilder();
-    find(root, startValue, s);
-    find(root, destValue, d);
-    int i = 0, max_i = Math.min(d.length(), s.length());
-    while (i < max_i && s.charAt(s.length() - i - 1) == d.charAt(d.length() - i - 1))
-        ++i;
-    return "U".repeat(s.length() - i) + d.reverse().toString().substring(i);
-}
-```
-
-# Word Search
+## Word Search
 ```java
 class Solution {
     public boolean exist(char[][] board, String word) {
