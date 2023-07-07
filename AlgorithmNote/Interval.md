@@ -1,3 +1,4 @@
+## Interval Scheduling
 ### EDF: Earliest Deadline First
 Earliest deadline first (EDF) or least time to go is a dynamic priority scheduling algorithm used in real-time operating systems to place processes in a priority queue. Whenever a scheduling event occurs (task finishes, new task released, etc.) the queue will be searched for the process closest to its deadline. This process is the next to be scheduled for execution.
 
@@ -60,6 +61,65 @@ e.g. [ [1,4], [2,3], [3,4] ], the interval with early start might be very long a
 
         return maxRooms;
     }
+```
+
+## Merge Intervals
+
+#### ❤️ 2158. Amount of New Area Painted Each Day
+![image](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/fe9c82c0-701f-4f12-ab27-13351aa71a6c)
+
+![image](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/dbcbf332-2aa3-4f1f-bc21-d5a2f268d25a)
+
+![image](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/7c53e9fa-1c55-4556-95ac-b06ee53a2186)
+
+![image](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/a229045b-0919-49bb-918b-85c93ae2bb5e)
+
+
+```java
+public int[] amountPainted(int[][] paint) {
+    int n = paint.length;
+    int[] result = new int[n];
+    TreeMap<Integer, Integer> intervals = new TreeMap<>();
+
+    for (int i = 0; i < n; i++) {
+        int[] current = paint[i];
+        // start and end to record the merged interval
+        int start = current[0];
+        int end = current[1];
+        int toPaint = end - start;
+
+        Map.Entry<Integer, Integer> floor = intervals.floorEntry(current[0]);
+        if (floor != null) {
+            if (floor.getValue() >= end) {
+                // the entire current interval has been covered by floor, so the result[i] = 0 and simply just continue.
+                continue;
+            }
+            if (floor.getValue() >= start) {
+                // the current interval has been partially covered by floor, so deduct the overlapping length.
+                toPaint -= floor.getValue() - start;
+                intervals.remove(floor.getKey());
+                start = floor.getKey();
+            }
+        }
+
+        Map.Entry<Integer, Integer> ceiling = intervals.ceilingEntry(current[0]);
+        // there could be multiple ceilings overlap with the current interval.
+        // e.g. current [5, 20], ceilings: [6, 8], [10, 15], [18, 22]
+        // We need to deduct the overlapping length properly
+        while (ceiling != null && ceiling.getKey() <= end) {
+            toPaint -= Math.min(end, ceiling.getValue()) - ceiling.getKey();
+            intervals.remove(ceiling.getKey());
+            end = Math.max(end, ceiling.getValue());
+            ceiling = intervals.ceilingEntry(current[0]);
+        }
+
+        result[i] = toPaint;
+        // add the merged interval to treemap
+        intervals.put(start, end);
+    }
+
+    return result;
+}
 ```
 
 #### Use prefix sum to mark boarder of intervals, 2381. Shifting Letters II
