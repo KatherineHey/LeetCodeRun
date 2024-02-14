@@ -909,8 +909,8 @@ As a compromise you can use data structures, that perform both types of operatio
 
 #### 8 Eulerian path
 an Eulerian trail (or Eulerian path) is a trail in a finite graph that visits every edge exactly once (allowing for revisiting vertices)
+![obrazek](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/d3a76709-dc9f-46d9-ba3c-75936ee7d646)
 
-![obrazek](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/48a8601d-5ad0-4dc3-9378-3f4cc5d01a21)
 ![obrazek](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/e95b6f2d-99d3-4113-bb93-d7fd3fe8f06b)
 
 - [x] 332. Reconstruct Itinerary
