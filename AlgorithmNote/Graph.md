@@ -903,7 +903,11 @@ To accomplish that we can use a variation of multiple auxiliary data structures.
 As a compromise you can use data structures, that perform both types of operations (extracting a minimum and updating an item) in &nbsp; &nbsp; . Then the complexity of Dijkstra's algorithm is&nbsp; &nbsp; &nbsp; &nbsp;.
 
 
-#### 7 Eulerian path
+#### 8 Eulerian path
+an Eulerian trail (or Eulerian path) is a trail in a finite graph that visits every edge exactly once (allowing for revisiting vertices)
+
+![obrazek](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/48a8601d-5ad0-4dc3-9378-3f4cc5d01a21)
+![obrazek](https://github.com/KatherineHey/LeetCodeRun/assets/62370578/e95b6f2d-99d3-4113-bb93-d7fd3fe8f06b)
 
 - [x] 332. Reconstruct Itinerary
 
