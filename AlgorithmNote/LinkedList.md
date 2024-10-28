@@ -140,6 +140,112 @@ The point where they first meet is the start of the cycle.
 ```
 
 ##### LRU Cache
+```java
+class LRUCache {
+    int Capacity;
+    DoubleLinkedListNode Prehead; // the dummy node before head
+    DoubleLinkedListNode Tail; // the dummy tail node
+    HashMap<Integer, DoubleLinkedListNode> Map;
+    
+    class DoubleLinkedListNode {
+        int key;
+        int value;
+        DoubleLinkedListNode pre;
+        DoubleLinkedListNode next;
+        
+        public DoubleLinkedListNode(int k, int v) {
+            key = k;
+            value = v;
+        }
+        
+        public DoubleLinkedListNode() {
+        }
+    }
+    
+        
+    /**
+     * Add a node to the current double linked list
+     * Always add the given node to the position after the dummy head
+     * @param cur
+     */
+    public void addNode(DoubleLinkedListNode node) {
+        DoubleLinkedListNode curHead = Prehead.next;
+        node.next = curHead;
+        node.pre = Prehead;
+        curHead.pre = node; //****
+        Prehead.next = node;
+    }
+    
+    public void putToHead(DoubleLinkedListNode cur) {
+        removeNode(cur);
+        addNode(cur);
+    }
+    
+    /**
+     * Remove a node from middle of the double linked list
+     * @param node
+     */
+    public void removeNode(DoubleLinkedListNode node) {
+        node.pre.next = node.next;
+        node.next.pre = node.pre;
+    }
+    
+    public void removeTail(){
+        // Remove the real tail, as in the one ahead of dummy tail
+        // Remove tail from double linked list
+        Tail.pre.next = null;
+        Tail = Tail.pre;  
+        
+        // Remove real tail from hashmap
+        Map.remove(Tail.key); 
+    }
+    
+    public LRUCache(int capacity) {
+        Capacity = capacity;
+        Map = new HashMap<>();
+        Prehead = new DoubleLinkedListNode();
+        Tail = new DoubleLinkedListNode();
+        Prehead.pre = null; Prehead.next = Tail;
+        Tail.pre = Prehead; Tail.next = null;
+    }
+    
+    public int get(int key) {
+        if (!Map.containsKey(key)) return -1;
+        
+        DoubleLinkedListNode cur = Map.get(key);
+        putToHead(cur);
+        
+        return cur.value;
+    }
+    
+    public void put(int key, int value) {
+        DoubleLinkedListNode cur;
+        if (!Map.containsKey(key)) {
+            cur = new DoubleLinkedListNode(key, value);
+            
+            if (Map.size() >= Capacity) {
+                removeTail();
+            }
+            
+            addNode(cur);
+            
+            Map.put(key, cur);
+        } else {
+            cur = Map.get(key);
+            cur.value = value;
+            
+            putToHead(cur);
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
 
 ##### Copy list with random pointer
 ```java
