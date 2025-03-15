@@ -137,7 +137,7 @@
         
         while (!treeNodes.isEmpty()) {
             TreeNode tmp = treeNodes.pop();
-            result.add(0, tmp.val);
+            result.add(tmp.val);
 
             if (tmp.left != null) {
                 treeNodes.push(tmp.left);
@@ -147,7 +147,34 @@
                 treeNodes.push(tmp.right);
             }
         }
+        Collections.reverse(result);
         return result;
+    }
+
+    // An iterative function to do postorder traversal 
+    // of a given binary tree
+    // Push directly root node two times while traversing to the left. While popping if you find stack top() is same as root
+    // then go for root->right else print root.
+    public void postOrderIterative(Node root) {
+        Stack<Node> stack = new Stack<>();
+        while(true) {
+            while(root != null) {
+                stack.push(root);
+                stack.push(root);
+                root = root.left;
+            }
+            
+            // Check for empty stack
+            if(stack.empty()) return;
+            root = stack.pop();
+            
+            if(!stack.empty() && stack.peek() == root) root = root.right;
+            
+            else {
+                
+                System.out.print(root.data + " "); root = null;
+            }
+        }
     }
 
 ```
@@ -200,6 +227,117 @@ class Solution {
         
         return results;
     }
+```
+
+863. All Nodes Distance K in Binary Tree
+```java
+class Solution {
+    
+    Map<TreeNode, Integer> map = new HashMap<>();
+        
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+        List<Integer> res = new LinkedList<>();
+        find(root, target);
+        dfs(root, target, K, map.get(root), res);
+        return res;
+    }
+    
+    // find target node first and store the distance in that path that we could use it later directly
+    private int find(TreeNode root, TreeNode target) {
+        if (root == null) return -1;
+        if (root == target) {
+            map.put(root, 0);
+            return 0;
+        }
+        int left = find(root.left, target);
+        if (left >= 0) {
+            map.put(root, left + 1);
+            return left + 1;
+        }
+		int right = find(root.right, target);
+		if (right >= 0) {
+            map.put(root, right + 1);
+            return right + 1;
+        }
+        return -1;
+    }
+    
+    private void dfs(TreeNode root, TreeNode target, int K, int length, List<Integer> res) {
+        if (root == null) return;
+        if (map.containsKey(root)) length = map.get(root);
+        if (length == K) res.add(root.val);
+        dfs(root.left, target, K, length + 1, res);
+        dfs(root.right, target, K, length + 1, res);
+    }
+}
+```
+
+Option2. First construct the tree to graph then bfs
+```java
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+        // create an undirected graph with the treenode
+        HashMap<Integer, ArrayList<Integer>> graph = new HashMap<Integer, ArrayList<Integer>>();
+        dfs(root, graph);
+
+        List<Integer> res = new ArrayList<Integer>();
+        boolean[] visited = new boolean[501];
+        
+        // BFS to find the K length from target
+        Queue<Integer> q = new LinkedList<Integer>();
+        q.offer(target.val);
+        
+        while (K>=0 && !q.isEmpty()) {
+            if (K == 0) {
+                // result
+                while (!q.isEmpty()) {
+                    res.add(q.poll());
+                }
+            }
+            else if (K>0) {
+                int size = q.size();
+                for (int i = 0; i < size; i++) {
+                    int curVal = q.poll();
+                    
+                    if (!visited[curVal] && graph.containsKey(curVal)) {
+                        for (int neighbor: graph.get(curVal)) {
+                            //System.out.println(curVal+" neighbor:"+neighbor);
+                            if (!visited[neighbor]) {
+                                q.offer(neighbor);
+                                //visited[neighbor] = true;
+                            }
+                        }
+                        
+                        visited[curVal] = true;
+                    }
+                }
+                
+                K--;
+            }
+        }
+        
+        return res;
+    }
+    
+    public void dfs(TreeNode cur, HashMap<Integer, ArrayList<Integer>> graph) {
+        if (cur == null) return;
+        
+        TreeNode left = cur.left;
+        TreeNode right = cur.right;
+        
+        if (left != null) {
+            graph.computeIfAbsent(cur.val, k->new ArrayList<Integer>()).add(left.val);
+            graph.computeIfAbsent(left.val, k->new ArrayList<Integer>()).add(cur.val);
+        }
+        
+        if (right != null) {
+            graph.computeIfAbsent(cur.val, k->new ArrayList<Integer>()).add(right.val);
+            graph.computeIfAbsent(right.val, k->new ArrayList<Integer>()).add(cur.val);
+        }
+        
+        dfs(cur.left, graph);
+        dfs(cur.right, graph);
+    }
+    
 ```
 
 ## BFS / Level Order Traversal
@@ -477,6 +615,23 @@ class Solution {
         return Math.max(leftPath, Math.max(rightPath, root.val));
     }
 }
+
+//option2
+    public int maxSumHelper(TreeNode root) {
+		// base case
+        if (root == null) return 0; 
+		
+		// recursing through left and right subtree
+        int left = Math.max(0, maxSumHelper(root.left));
+        int right = Math.max(0, maxSumHelper(root.right));
+
+		// Storing the result in the maxSum holder
+        maxSum = Math.max(maxSum, left+right+root.val);
+		
+		// returning the value if root was part of the answer
+        return Math.max(left, right) + root.val;
+
+    }
 ```
 
 ##    :heart: 1110. Delete Nodes And Return Forest
