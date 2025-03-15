@@ -155,26 +155,26 @@
     // of a given binary tree
     // Push directly root node two times while traversing to the left. While popping if you find stack top() is same as root
     // then go for root->right else print root.
-    public void postOrderIterative(Node root) {
-        Stack<Node> stack = new Stack<>();
-        while(true) {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> res = new ArrayList<>();
+        while(!stack.isEmpty()|| root!= null) {
             while(root != null) {
                 stack.push(root);
                 stack.push(root);
                 root = root.left;
             }
             
-            // Check for empty stack
-            if(stack.empty()) return;
             root = stack.pop();
             
             if(!stack.empty() && stack.peek() == root) root = root.right;
-            
-            else {
-                
-                System.out.print(root.data + " "); root = null;
+            else if (root != null) {
+                res.add(root.val);
+                root = null;
             }
         }
+
+        return res;
     }
 
 ```
