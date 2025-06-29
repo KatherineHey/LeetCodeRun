@@ -231,34 +231,65 @@ class Solution {
 
 863. All Nodes Distance K in Binary Tree
 ```java
-public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
-    Map<Integer, Set<Integer>> map = new HashMap<>();
-    buildMap(map, root, null);
-    Set<Integer> visited = new HashSet<>();
-    Queue<Integer> queue = new ArrayDeque<>();
-    queue.offer(target.val);
-    visited.add(target.val);
-    while (!queue.isEmpty() && K-- > 0) {
-        int size = queue.size();
-        for (int i = 0; i < size; i++) {
-            int val = queue.poll();
-            for (int next : map.get(val)) {
-                if (visited.add(next)) queue.offer(next);
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+class Solution {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        buildParent(parent, root);
+        Queue<TreeNode> q = new LinkedList<>();
+        Set<TreeNode> visited = new HashSet<>();
+        q.add(target);
+        visited.add(target);
+        int steps = 0;
+        while (!q.isEmpty() && steps < k) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+                if (node.left != null && !visited.contains(node.left)) {
+                    q.add(node.left);
+                    visited.add(node.left);
+                }
+                if (node.right != null && !visited.contains(node.right)) {
+                    q.add(node.right);
+                    visited.add(node.right);
+                }
+                if (parent.containsKey(node) && !visited.contains(parent.get(node))) {
+                    q.add(parent.get(node));
+                    visited.add(parent.get(node));
+                }
             }
+            steps++;
+        }
+        List<Integer> result = new ArrayList<>();
+        while (!q.isEmpty()) {
+            result.add(q.poll().val);
+        }
+        return result;
+
+    }
+
+    public void buildParent(Map<TreeNode, TreeNode> parent, TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (root.left != null) {
+            parent.put(root.left, root);
+            buildParent(parent, root.left);
+        }
+        if (root.right != null) {
+            parent.put(root.right, root);
+            buildParent(parent, root.right);
         }
     }
-    return new ArrayList<>(queue);
-}
-
-private void buildMap(Map<Integer, Set<Integer>> map, TreeNode root, TreeNode parentNode) {
-    if (root == null) return;
-    int val = root.val;
-    map.put(val, new HashSet<>());
-    if (root. left != null) map.get(val).add(root. left.val);
-    if (root.right != null) map.get(val).add(root.right.val);
-    if (parentNode != null) map.get(val).add(parentNode.val);
-    buildMap(map, root. left, root);
-    buildMap(map, root.right, root);
 }
 ```
 
