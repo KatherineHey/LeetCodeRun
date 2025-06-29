@@ -231,6 +231,38 @@ class Solution {
 
 863. All Nodes Distance K in Binary Tree
 ```java
+public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+    Map<Integer, Set<Integer>> map = new HashMap<>();
+    buildMap(map, root, null);
+    Set<Integer> visited = new HashSet<>();
+    Queue<Integer> queue = new ArrayDeque<>();
+    queue.offer(target.val);
+    visited.add(target.val);
+    while (!queue.isEmpty() && K-- > 0) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            int val = queue.poll();
+            for (int next : map.get(val)) {
+                if (visited.add(next)) queue.offer(next);
+            }
+        }
+    }
+    return new ArrayList<>(queue);
+}
+
+private void buildMap(Map<Integer, Set<Integer>> map, TreeNode root, TreeNode parentNode) {
+    if (root == null) return;
+    int val = root.val;
+    map.put(val, new HashSet<>());
+    if (root. left != null) map.get(val).add(root. left.val);
+    if (root.right != null) map.get(val).add(root.right.val);
+    if (parentNode != null) map.get(val).add(parentNode.val);
+    buildMap(map, root. left, root);
+    buildMap(map, root.right, root);
+}
+```
+
+```java
 class Solution {
     
     Map<TreeNode, Integer> map = new HashMap<>();
